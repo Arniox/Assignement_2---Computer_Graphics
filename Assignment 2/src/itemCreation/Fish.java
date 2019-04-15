@@ -113,16 +113,34 @@ public class Fish {
 		
 		//Extra rotations and translation clipping for Eyes
 		//EyeLidRight
-		ArrayList<float[]> extraEyeLidRightRotations = new ArrayList<float[]>();
-		extraEyeLidRightRotations.add(new float[]{90,0,1,0});
+		ArrayList<float[]> extraEyeRightLidRotations = new ArrayList<float[]>();
+		extraEyeRightLidRotations.add(new float[]{90,0,1,0});
+		extraEyeRightLidRotations.add(new float[]{-30,1,0,0});
+		//EyeLidLEft
+		ArrayList<float[]> extraEyeLeftLidRotations = new ArrayList<float[]>();
+		extraEyeLeftLidRotations.add(new float[]{90,0,1,0});
+		extraEyeLeftLidRotations.add(new float[]{30,1,0,0});
+		
 		
 		
 		//Set parts - Eyes
 		//Sphere = Scale, Clipping options, Sphere radius, Size scale, Translation, Rotation, Colour4d, Extra rotations, Extra translations
-		EyeLidRight.drawSphere(SCALE, new boolean[]{false, false, true, false}, 0.005f, new double[]{1,1,1},
-										 new double[]{fishPosition[0]+0.1,fishPosition[1],fishPosition[2]},
+		EyeLidRight.drawSphere(SCALE, new boolean[]{false, false, true, false}, 0.005f, new double[]{0.8,0.8,0.8},
+										 new double[]{fishPosition[0]+0.049,fishPosition[1]+0.004,fishPosition[2]+0.01},
 										 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_UNDER_BODY_COLOUR,
-										 extraEyeLidRightRotations, null);
+										 extraEyeRightLidRotations, null);
+		EyeBallRight.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
+										 new double[]{fishPosition[0]+0.047,fishPosition[1]+0.0027,fishPosition[2]+0.01},
+										 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_EYE_BALL_COLOUR,
+										 null, null);
+		EyeLidLeft.drawSphere(SCALE, new boolean[]{false, false, false, true}, 0.005f, new double[]{0.8,0.8,0.8},
+										 new double[]{fishPosition[0]-0.049,fishPosition[1]+0.004,fishPosition[2]+0.01},
+										 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_UNDER_BODY_COLOUR,
+										 extraEyeLeftLidRotations, null);
+		EyeBallLeft.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
+										 new double[]{fishPosition[0]-0.047,fishPosition[1]+0.0027,fishPosition[2]+0.01},
+										 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_EYE_BALL_COLOUR,
+										 null, null);
 		
 		
 	}

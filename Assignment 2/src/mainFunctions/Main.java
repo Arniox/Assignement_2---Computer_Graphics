@@ -33,10 +33,10 @@ public class Main implements GLEventListener, KeyListener{
 	private Tank tank;
 	private Fish fish;
 	//tank scaling
-	private float tankWidth = 10f;
-	private float tankHeight = 5f;
-	private float tankLength = 10f;
-	private float[] tankGlobalPos = {0f,(tankHeight/10),0f};
+	private float tankWidth = 15f;
+	private float tankHeight = 8f;
+	private float tankLength = 15f;
+	private float[] tankGlobalPos = {0f,(tankHeight/(tankHeight*2)),0f};
 	
 	//Fish parts
 	private float[] fishGlobalPos = {0f,(tankHeight/10)/2,0f};
