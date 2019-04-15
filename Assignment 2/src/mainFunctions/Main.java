@@ -39,8 +39,8 @@ public class Main implements GLEventListener, KeyListener{
 	private float[] tankGlobalPos = {0f,(tankHeight/(tankHeight*2)),0f};
 	
 	//Fish parts
-	private float[] fishGlobalPos = {0f,(tankHeight/10)/2,0f};
-	private float[] fishGlobalRotation = {18f,0,1,0};
+	private float[] fishGlobalPos = {0f,(tankHeight/10)/2,0.1f};
+	private float[] fishGlobalRotation = {45f,0,1,0};
 	
 	//track-ball camera
 	private TrackballCamera camera;
@@ -109,7 +109,7 @@ public class Main implements GLEventListener, KeyListener{
 			//Camera
 			camera.draw(gl, true);
 			//Axis
-			coordinateAxis.drawAxes();
+			coordinateAxis.drawAxes(fishGlobalPos);
 			//Draw all other non transparent objects
 			fish.drawFish(fishGlobalPos, fishGlobalRotation);
 			//Draw transparent objects last

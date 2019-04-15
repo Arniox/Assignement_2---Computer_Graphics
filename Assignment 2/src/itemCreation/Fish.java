@@ -41,6 +41,7 @@ public class Fish {
 	Sphere EyeLidLeft;
 	Sphere EyeBallRight;
 	Sphere EyeBallLeft;
+	//Objects - Front fins
 	
 	//constructor
 	public Fish(GL2 gl, GLUT glut) {
@@ -83,33 +84,34 @@ public class Fish {
 		ArrayList<float[]> extraTopMouthRotation = new ArrayList<float[]>();
 		extraTopMouthRotation.add(new float[]{1.5f,1,0,0});
 		
+		//Push
+		gl.glPushMatrix();
+		
+		//GLOBAL TRANSLATION AND ROTATIONS
+		gl.glTranslated(fishPosition[0], fishPosition[1], fishPosition[2]);
+		gl.glRotated(fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]);
+		
 		//Set parts - Body, mouth, teeth
-		//Cylinder = Scale, Clipping options, Base radius, Top radius, Height of cylinder, Size scale, Translation, Rotation, Color4d, Extra rotations, Extra translations
-		//Sphere = Scale, Clipping options, Sphere radius, Size scale, Translation, Rotation, Colour4d, Extra rotations, Extra translations
+		//Cylinder = Scale, Clipping options, Base radius, Top radius, Height of cylinder, Size scale, Translation, Color4d, Extra rotations, Extra translations
+		//Sphere = Scale, Clipping options, Sphere radius, Size scale, Translation, Colour4d, Extra rotations, Extra translations
 		fishUnderBodyMiddle.drawCylinder(SCALE, new boolean[]{true, false}, 0.05f, 0.043f, 0.2f, new double[]{1,1,1},
-							  			 new double[]{fishPosition[0],fishPosition[1],fishPosition[2]},
-							  			 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_UNDER_BODY_COLOUR,
-							  			 null, null);
+							  			 new double[]{0,0,0},
+							  			 FISH_UNDER_BODY_COLOUR, null, null);
 		fishUnderBodyMouth.drawSphere(SCALE, new boolean[]{true, false, true, false}, 0.05f, new double[]{1,1,3.5},
-									  	 new double[]{fishPosition[0],fishPosition[1],fishPosition[2]}, 
-									  	 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_UNDER_BODY_COLOUR,
-									  	 extraBottomMouthRotations, null);
+									  	 new double[]{0,0,0}, 
+									  	 FISH_UNDER_BODY_COLOUR, extraBottomMouthRotations, null);
 		fishTeethTop.drawCylinder(SCALE, new boolean[]{true, false}, 0.04f, 0.037f, 0.04f, new double[]{1,3.8,1},
-										 new double[]{fishPosition[0],fishPosition[1]+0.008,fishPosition[2]+0.01},
-										 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_TEETH_COLOUR,
-										 extraTopTeethRotations, null);
+										 new double[]{0,0.008,-0.002},
+										 FISH_TEETH_COLOUR, extraTopTeethRotations, null);
 		fishTeethBottom.drawCylinder(SCALE, new boolean[]{true, false}, 0.038f, 0.039f, 0.022f, new double[]{1,3.8,1},
-										 new double[]{fishPosition[0],fishPosition[1]-0.008,fishPosition[2]+0.01},
-										 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_TEETH_COLOUR,
-										 extraBottomTeethRotations, null);
+										 new double[]{0,-0.008,-0.002},
+										 FISH_TEETH_COLOUR, extraBottomTeethRotations, null);
 		fishTopBodyMiddle.drawCylinder(SCALE, new boolean[]{false, true}, 0.0584f, 0.0525f, 0.2f, new double[]{1,1,1},
-										 new double[]{fishPosition[0],fishPosition[1],fishPosition[2]},
-										 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_TOP_BODY_COLOUR,
-										 null, extraTopMouthClipping);
+										 new double[]{0,0,0},
+										 FISH_TOP_BODY_COLOUR, null, extraTopMouthClipping);
 		fishTopBodyMouth.drawSphere(SCALE, new boolean[]{false, true, true, false}, 0.0584f, new double[]{1,1,3.25},
-										 new double[]{fishPosition[0],fishPosition[1],fishPosition[2]},
-										 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_TOP_BODY_COLOUR,
-										 extraTopMouthRotation, extraTopMouthClipping);
+										 new double[]{0,0,0},
+										 FISH_TOP_BODY_COLOUR, extraTopMouthRotation, extraTopMouthClipping);
 		
 		//Extra rotations and translation clipping for Eyes
 		//EyeLidRight
@@ -124,25 +126,48 @@ public class Fish {
 		
 		
 		//Set parts - Eyes
-		//Sphere = Scale, Clipping options, Sphere radius, Size scale, Translation, Rotation, Colour4d, Extra rotations, Extra translations
+		//Sphere = Scale, Clipping options, Sphere radius, Size scale, Translation, Colour4d, Extra rotations, Extra translations
 		EyeLidRight.drawSphere(SCALE, new boolean[]{false, false, true, false}, 0.005f, new double[]{0.8,0.8,0.8},
-										 new double[]{fishPosition[0]+0.049,fishPosition[1]+0.004,fishPosition[2]+0.01},
-										 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_UNDER_BODY_COLOUR,
-										 extraEyeRightLidRotations, null);
+										 new double[]{0.049,0.004,0.01},
+										 FISH_UNDER_BODY_COLOUR, extraEyeRightLidRotations, null);
 		EyeBallRight.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
-										 new double[]{fishPosition[0]+0.047,fishPosition[1]+0.0027,fishPosition[2]+0.01},
-										 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_EYE_BALL_COLOUR,
-										 null, null);
+										 new double[]{0.047,0.0027,0.01},
+										 FISH_EYE_BALL_COLOUR, null, null);
 		EyeLidLeft.drawSphere(SCALE, new boolean[]{false, false, false, true}, 0.005f, new double[]{0.8,0.8,0.8},
-										 new double[]{fishPosition[0]-0.049,fishPosition[1]+0.004,fishPosition[2]+0.01},
-										 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_UNDER_BODY_COLOUR,
-										 extraEyeLeftLidRotations, null);
+										 new double[]{-0.049,0.004,0.01},
+										 FISH_UNDER_BODY_COLOUR, extraEyeLeftLidRotations, null);
 		EyeBallLeft.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
-										 new double[]{fishPosition[0]-0.047,fishPosition[1]+0.0027,fishPosition[2]+0.01},
-										 new double[]{fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]}, FISH_EYE_BALL_COLOUR,
-										 null, null);
+										 new double[]{-0.047,0.0027,0.01},
+										 FISH_EYE_BALL_COLOUR, null, null);
+
+		//Pop
+		gl.glPopMatrix();
 		
-		
+//		gl.glColor3d(1, 0, 0);
+//		gl.glBegin(GL2.GL_POLYGON);
+//			//One side
+//			gl.glVertex3f(0,1,0);
+//			gl.glVertex3f(-1,0,1);
+//			gl.glVertex3f(1,0,1);
+//			gl.glVertex3f(0,1,0);
+//			//Second side
+//			gl.glColor3d(0,1,0);
+//			gl.glVertex3f(1,0,1);
+//			gl.glVertex3f(1,0,-1);
+//			gl.glVertex3f(0,1,0);
+//			//Third side
+//			gl.glColor3d(0,0,1);
+//			gl.glVertex3f(1,0,-1);
+//			gl.glVertex3f(-1,0,-1);
+//			gl.glVertex3f(0,1,0);
+//			//Fourth Side
+//			gl.glColor3d(1,1,0);
+//			gl.glVertex3f(-1,0,-1);
+//			gl.glVertex3f(-1,0,1);
+//			gl.glVertex3f(0,1,0);
+//			
+//		gl.glEnd();
+			
 	}
 	
 }

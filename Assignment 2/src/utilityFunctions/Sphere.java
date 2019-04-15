@@ -32,29 +32,27 @@ public class Sphere {
 	 * @param radius - The radius of the sphere
 	 * @param sizeScale - The size scaling of the sphere in the direction x, y, z
 	 * @param translate - The translation of the sphere in the direction x, y, z
-	 * @param rotate - The rotation of the sphere by the angle alpha, by x, y, z
 	 * @param colour4d - The colour of the sphere in 4D. RGBA
 	 * @param extraRotations - Rotations beyond the normal rotation options.
 	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: angle</li><li>float[] index 1: x</li><li>float[] index 2: y</li><li>float[] index 3: z</li></ul></li></ul>
 	 * @param extraClipping - Clipping beyond the normal clipping options. This translates the sphere inwards or outwards of the clipping plane
 	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: x</li><li>float[] index 1: y</li><li>float[] index 2: z</li></ul></li></ul>
 	 */
-	public void drawSphere(float scale, boolean[] clippingOptions, double radius, double[] sizeScale, double[] translate, double[] rotate, float[] colour4d, 
+	public void drawSphere(float scale, boolean[] clippingOptions, double radius, double[] sizeScale, double[] translate, float[] colour4d, 
 						   ArrayList<float[]> extraRotations, ArrayList<float[]> extraClipping) {
 		//Push
 		gl.glPushMatrix();
 
 		//In specific order:
-		// - Basic rotations
 		// - Basic translations
 		// - Extra Rotations
 		// - Scaling
 		// - Clipping plane added
 		// - Extra translations beyond the clipping plane for custom cuts
 		// - Draw
-		gl.glRotated(rotate[0], rotate[1], rotate[2], rotate[3]);
+
 		gl.glTranslated(translate[0], translate[1], translate[2]);
-		//Rotate into clipping plane to cut a sphere deeper
+		//Add extra rotations
 		if(extraRotations!=null) {
 			for(float[] extraRot : extraRotations) {
 				gl.glRotated(extraRot[0], extraRot[1], extraRot[2], extraRot[3]);

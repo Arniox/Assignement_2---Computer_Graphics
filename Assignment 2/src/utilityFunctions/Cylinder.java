@@ -41,7 +41,6 @@ public class Cylinder {
 	 * @param heightOfCylinder - The height of the cylinder
 	 * @param sizeScale - The size scale of the object in the x, y, z direction
 	 * @param translate - The translation of the object in the x, y, z direction
-	 * @param rotate - The rotation of the object by the angle alpha in the x, y, z direction
 	 * @param colour4d - The colour of the object in 4D. RGBA
 	 * @param extraRotations - Rotate with more options beyond the base rotation.
 	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: angle</li><li>float[] index 1: x</li><li>float[] index 2: y</li><li>float[] index 3: z</li></ul></li></ul>
@@ -50,20 +49,19 @@ public class Cylinder {
 	 * 
 	 */
 	public void drawCylinder(float scale, boolean[] clippingOptions, float baseRadius, float topRadius, float heightOfCylinder, 
-							 double[] sizeScale, double[] translate, double[] rotate, float[] colour4d,
+							 double[] sizeScale, double[] translate, float[] colour4d,
 							 ArrayList<float[]> extraRotations, ArrayList<float[]> extraClipping) {		
 		//Push
 		gl.glPushMatrix();
 
 		//In specific order:
-		// - Basic rotations
 		// - Basic translations
 		// - Extra Rotations
 		// - Scaling
 		// - Clipping plane added
 		// - Extra translations beyond the clipping plane for custom cuts
 		// - Draw
-		gl.glRotated(rotate[0], rotate[1], rotate[2], rotate[3]);
+
 		gl.glTranslated(translate[0], translate[1], translate[2]);
 		//Add extra rotations
 		if(extraRotations!=null) {
