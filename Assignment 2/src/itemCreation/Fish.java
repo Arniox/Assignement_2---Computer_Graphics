@@ -142,31 +142,6 @@ public class Fish {
 
 		//Pop
 		gl.glPopMatrix();
-		
-//		gl.glColor3d(1, 0, 0);
-//		gl.glBegin(GL2.GL_POLYGON);
-//			//One side
-//			gl.glVertex3f(0,1,0);
-//			gl.glVertex3f(-1,0,1);
-//			gl.glVertex3f(1,0,1);
-//			gl.glVertex3f(0,1,0);
-//			//Second side
-//			gl.glColor3d(0,1,0);
-//			gl.glVertex3f(1,0,1);
-//			gl.glVertex3f(1,0,-1);
-//			gl.glVertex3f(0,1,0);
-//			//Third side
-//			gl.glColor3d(0,0,1);
-//			gl.glVertex3f(1,0,-1);
-//			gl.glVertex3f(-1,0,-1);
-//			gl.glVertex3f(0,1,0);
-//			//Fourth Side
-//			gl.glColor3d(1,1,0);
-//			gl.glVertex3f(-1,0,-1);
-//			gl.glVertex3f(-1,0,1);
-//			gl.glVertex3f(0,1,0);
-//			
-//		gl.glEnd();
 			
 	}
 	

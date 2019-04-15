@@ -15,7 +15,7 @@ public class CoordinateAxes {
 	}
 	
 	//Draw the axes lines and sphere
-	public void drawAxes(float[] fishPosition) {
+	public void drawAxes(float[] fishPosition, float[] fishRotation) {
 		gl.glDisable(GL2.GL_LIGHTING);
 		
 		//Draw axis lines
@@ -49,7 +49,7 @@ public class CoordinateAxes {
 			//Draw Line to fish
 			gl.glColor3d(1.0f, 1.0f, 0.0f);
 			gl.glVertex3d(0,0,0);
-			gl.glVertex3f(fishPosition[0], fishPosition[1], fishPosition[2]);
+			gl.glVertex3f(fishPosition[0], fishPosition[1], fishPosition[2]);			
 		gl.glEnd();
 		
 		//Draw sphere

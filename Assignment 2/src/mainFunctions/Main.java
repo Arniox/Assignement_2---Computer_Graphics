@@ -109,7 +109,7 @@ public class Main implements GLEventListener, KeyListener{
 			//Camera
 			camera.draw(gl, true);
 			//Axis
-			coordinateAxis.drawAxes(fishGlobalPos);
+			coordinateAxis.drawAxes(fishGlobalPos, fishGlobalRotation);
 			//Draw all other non transparent objects
 			fish.drawFish(fishGlobalPos, fishGlobalRotation);
 			//Draw transparent objects last
