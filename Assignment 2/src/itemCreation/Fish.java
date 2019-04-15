@@ -6,6 +6,7 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.gl2.GLUT;
 
+import utilityFunctions.Cone;
 import utilityFunctions.Cylinder;
 import utilityFunctions.Sphere;
 
@@ -37,11 +38,18 @@ public class Fish {
 	Cylinder fishTopBodyMiddle;
 	Sphere fishTopBodyMouth;
 	//Objects - Eyes
-	Sphere EyeLidRight;
-	Sphere EyeLidLeft;
-	Sphere EyeBallRight;
-	Sphere EyeBallLeft;
+	Sphere eyeLidRight;
+	Sphere eyeLidLeft;
+	Sphere eyeBallRight;
+	Sphere eyeBallLeft;
 	//Objects - Front fins
+	Cylinder finRightInner;
+	Cylinder finLeftInner;
+	Cylinder finRightMiddle;
+	Cylinder finLeftMiddle;
+	Cone finRightEnd;
+	Cone finLeftEnd;
+	
 	
 	//constructor
 	public Fish(GL2 gl, GLUT glut) {
@@ -50,17 +58,24 @@ public class Fish {
 		this.glu = new GLU();
 		
 		//Set up objects - Body, mouth, teeth
-		fishUnderBodyMiddle = new Cylinder(this.gl, this.glut, this.glu);
+		fishUnderBodyMiddle = new Cylinder(this.gl, this.glu);
 		fishUnderBodyMouth = new Sphere(this.gl, this.glut);
-		fishTeethTop = new Cylinder(this.gl, this.glut, this.glu);
-		fishTeethBottom = new Cylinder(this.gl, this.glut, this.glu);
-		fishTopBodyMiddle = new Cylinder(this.gl, this.glut, this.glu);
+		fishTeethTop = new Cylinder(this.gl, this.glu);
+		fishTeethBottom = new Cylinder(this.gl, this.glu);
+		fishTopBodyMiddle = new Cylinder(this.gl, this.glu);
 		fishTopBodyMouth = new Sphere(this.gl, this.glut);
 		//Set up objects - Eyes
-		EyeLidRight = new Sphere(this.gl, this.glut);
-		EyeLidLeft = new Sphere(this.gl, this.glut);
-		EyeBallRight = new Sphere(this.gl, this.glut);
-		EyeBallLeft = new Sphere(this.gl, this.glut);
+		eyeLidRight = new Sphere(this.gl, this.glut);
+		eyeLidLeft = new Sphere(this.gl, this.glut);
+		eyeBallRight = new Sphere(this.gl, this.glut);
+		eyeBallLeft = new Sphere(this.gl, this.glut);
+		//Set up objects - Front fints
+		finRightInner = new Cylinder(this.gl, this.glu);
+		finLeftInner = new Cylinder(this.gl, this.glu);
+		finRightMiddle = new Cylinder(this.gl, this.glu);
+		finLeftMiddle = new Cylinder(this.gl, this.glu);
+		finRightEnd = new Cone(this.gl, this.glut);
+		finLeftEnd = new Cone(this.gl, this.glut);
 	}
 	
 	//draw fish
@@ -127,18 +142,59 @@ public class Fish {
 		
 		//Set parts - Eyes
 		//Sphere = Scale, Clipping options, Sphere radius, Size scale, Translation, Colour4d, Extra rotations, Extra translations
-		EyeLidRight.drawSphere(SCALE, new boolean[]{false, false, true, false}, 0.005f, new double[]{0.8,0.8,0.8},
+		eyeLidRight.drawSphere(SCALE, new boolean[]{false, false, true, false}, 0.005f, new double[]{0.8,0.8,0.8},
 										 new double[]{0.049,0.004,0.01},
 										 FISH_UNDER_BODY_COLOUR, extraEyeRightLidRotations, null);
-		EyeBallRight.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
+		eyeBallRight.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
 										 new double[]{0.047,0.0027,0.01},
 										 FISH_EYE_BALL_COLOUR, null, null);
-		EyeLidLeft.drawSphere(SCALE, new boolean[]{false, false, false, true}, 0.005f, new double[]{0.8,0.8,0.8},
+		eyeLidLeft.drawSphere(SCALE, new boolean[]{false, false, false, true}, 0.005f, new double[]{0.8,0.8,0.8},
 										 new double[]{-0.049,0.004,0.01},
 										 FISH_UNDER_BODY_COLOUR, extraEyeLeftLidRotations, null);
-		EyeBallLeft.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
+		eyeBallLeft.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
 										 new double[]{-0.047,0.0027,0.01},
 										 FISH_EYE_BALL_COLOUR, null, null);
+		
+		//Extra rotations and translation clipping for front fins
+		ArrayList<float[]> extraRightFinRotations = new ArrayList<float[]>();
+		extraRightFinRotations.add(new float[]{90,0,1,0});
+		extraRightFinRotations.add(new float[]{10,0,0,1});
+		ArrayList<float[]> extraLeftFinRotations = new ArrayList<float[]>();
+		extraLeftFinRotations.add(new float[]{-90,0,1,0});
+		extraLeftFinRotations.add(new float[]{-10,0,0,1});
+		
+		//Animation referencing
+		double[] finRightInnerTranslations = {0.045,0,0.06};
+		double[] finLeftInnerTranslations = {-0.045,0,0.06};
+		//Middle fin is referenced off of inner fin
+		double[] finRightMiddleTranslations = {finRightInnerTranslations[0]+0.0085,finRightInnerTranslations[1],finRightInnerTranslations[2]-0.0005};
+		double[] finLeftMiddleTranslations = {finLeftInnerTranslations[0]-0.0085,finLeftInnerTranslations[1],finLeftInnerTranslations[2]-0.0005};
+		//End fin is referenced off of middle fin
+		double[] finRightEndTranslations = {finRightMiddleTranslations[0]+0.0478,finRightMiddleTranslations[1]-0.0018,finRightMiddleTranslations[2]+0.0081};
+		double[] finLeftEndTranslations = {finLeftMiddleTranslations[0]-0.0478,finLeftMiddleTranslations[1]-0.0018,finLeftMiddleTranslations[2]+0.0081};
+		
+		//Set parts - Front fins
+		//Cylinder = Scale, Clipping options, Base radius, Top radius, Height of cylinder, Size scale, Translation, Color4d, Extra rotations, Extra translations
+		//Cone = Scale, Clipping options, Base radius, Height, Size scale, Translation, Colour4d, Extra rotations, Extra clipping
+		finRightInner.drawCylinder(SCALE, new boolean[]{false, false}, 0.001f, 0.008f, 0.01f, new double[]{1,0.2,1},
+										 finRightInnerTranslations, FISH_TOP_BODY_COLOUR, extraRightFinRotations, null);
+		finLeftInner.drawCylinder(SCALE, new boolean[]{false, false}, 0.001f, 0.008f, 0.01f, new double[]{1,0.2,1},
+										 finLeftInnerTranslations, FISH_TOP_BODY_COLOUR, extraLeftFinRotations, null);
+		//Rotations and translations of middle fin is referenced off of the inner fin
+		extraRightFinRotations.add(new float[]{-10,0,1,0});
+		finRightMiddle.drawCylinder(SCALE, new boolean[]{false, false}, 0.0076f, 0.007f, 0.05f, new double[]{1,0.2,1},
+										 finRightMiddleTranslations, FISH_TOP_BODY_COLOUR, extraRightFinRotations, null);
+		extraLeftFinRotations.add(new float[]{10,0,1,0});
+		finLeftMiddle.drawCylinder(SCALE, new boolean[]{false, false}, 0.0076f, 0.007f, 0.05f, new double[]{1,0.2,1},
+										 finLeftMiddleTranslations, FISH_TOP_BODY_COLOUR, extraLeftFinRotations, null);
+		//Rotations and translations of the end fin is referenced off of the middle fin
+		extraRightFinRotations.add(new float[]{-12,0,1,0});
+		finRightEnd.drawCone(SCALE, new boolean[]{false, false, false, false}, 0.0073f, 0.025f, new double[]{1,0.2,1},
+										 finRightEndTranslations, FISH_TOP_BODY_COLOUR, extraRightFinRotations, null);
+		extraLeftFinRotations.add(new float[]{12,0,1,0});
+		finLeftEnd.drawCone(SCALE, new boolean[]{false, false, false, false}, 0.0073f, 0.025f, new double[]{1,0.2,1},
+										 finLeftEndTranslations, FISH_TOP_BODY_COLOUR, extraLeftFinRotations, null);
+		
 
 		//Pop
 		gl.glPopMatrix();

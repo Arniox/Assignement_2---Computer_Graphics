@@ -1,17 +1,14 @@
 package utilityFunctions;
 
 import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.util.gl2.GLUT;
 
 public class CreateQuad {
 	//Main Variables
 	private static GL2 gl;
-	private static GLUT glut;
 	
 	//Constructor
-	public CreateQuad(GL2 gl, GLUT glut) {
-		this.gl = gl;
-		this.glut = glut;
+	public CreateQuad(GL2 gl) {
+		CreateQuad.gl = gl;
 	}
 	
 	/**

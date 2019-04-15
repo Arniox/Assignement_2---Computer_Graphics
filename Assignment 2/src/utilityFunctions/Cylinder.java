@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.glu.GLUquadric;
-import com.jogamp.opengl.util.gl2.GLUT;
 
 public class Cylinder {
 	//Main Variables
 	private static GL2 gl;
-	private static GLUT glut;
 	private static GLU glu;
 	
 	//Quadric Object
@@ -20,11 +18,16 @@ public class Cylinder {
 	private static final double[] CLIP_TOP = {0,-1.0f,0,0};
 	private static final double[] CLIP_BOTTOM = {0,1.0f,0,0};
 	
-	//Constructor
-	public Cylinder(GL2 gl, GLUT glut, GLU glu) {
-		this.gl = gl;
-		this.glut = glut;
-		this.glu = glu;
+	/**
+	 * Creates a Cylinder Object
+	 * @author Nikkolas Diehl
+	 * 
+	 * @param gl - GL2 input
+	 * @param glu - GLUT input
+	 */
+	public Cylinder(GL2 gl, GLU glu) {
+		Cylinder.gl = gl;
+		Cylinder.glu = glu;
 		
 		this.quadric = glu.gluNewQuadric();
 	}
@@ -44,7 +47,7 @@ public class Cylinder {
 	 * @param colour4d - The colour of the object in 4D. RGBA
 	 * @param extraRotations - Rotate with more options beyond the base rotation.
 	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: angle</li><li>float[] index 1: x</li><li>float[] index 2: y</li><li>float[] index 3: z</li></ul></li></ul>
-	 * @param extraClipping - Clipping beyond the normal clipping options. This translates the sphere inwards or outwards of the clipping plane
+	 * @param extraClipping - Translation beyond the normal clipping planes. This translates the sphere inwards or outwards of the clipping plane
 	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: x</li><li>float[] index 1: y</li><li>float[] index 2: z</li></ul></li></ul>
 	 * 
 	 */
@@ -69,7 +72,7 @@ public class Cylinder {
 				gl.glRotated(rotation[0], rotation[1], rotation[2], rotation[3]);
 			}
 		}
-		gl.glScaled(sizeScale[0], sizeScale[1], sizeScale[2]);
+		gl.glScaled(sizeScale[0]*scale, sizeScale[1]*scale, sizeScale[2]*scale);
 		
 		//Clip after translate
 		if(clippingOptions[0]) {
@@ -88,6 +91,7 @@ public class Cylinder {
 			}
 		}
 		
+		//Color and draw
 		gl.glColor4fv(colour4d, 0);
 		glu.gluCylinder(quadric, baseRadius, topRadius, heightOfCylinder, 100, 100);
 		
@@ -97,9 +101,5 @@ public class Cylinder {
 		
 		//Pop
 		gl.glPopMatrix();
-	}
-	
-	public void rotateObject(float angle, float xRot, float yRot, float zRot) {
-		gl.glRotated(angle, xRot, yRot, zRot);
 	}
 }

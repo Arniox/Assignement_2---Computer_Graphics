@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.util.gl2.GLUT;
 
-public class Sphere {
+public class Cone {
 	//Main Variables
 	private static GL2 gl;
 	private static GLUT glut;
@@ -17,38 +17,37 @@ public class Sphere {
 	private static final double[] CLIP_FRONT = {0,0,1.0f,0};
 	
 	/**
-	 * Creates a Sphere Object
+	 * Creates a cone object
 	 * @author Nikkolas Diehl
 	 * 
 	 * @param gl - GL2 input
 	 * @param glut - GLUT input
 	 */
-	public Sphere(GL2 gl, GLUT glut){
-		Sphere.gl = gl;
-		Sphere.glut = glut;
+	public Cone(GL2 gl, GLUT glut) {
+		Cone.gl = gl;
+		Cone.glut = glut;
 	}
 	
 	/**
-	 * Draw a sphere with given inputs
-	 * @author Nikkolas Diehl
 	 * 
 	 * @param scale - The scale of the entire object. It is advised to keep this at scale 1
-	 * @param clippingOptions - Options for clipping the sphere.
+	 * @param clippingOptions - Options for clipping the sphere
 	 * <ul><li>Index 0: clip top</li><li>Index 1: clip bottom</li><li>Index 2: clip back</li><li>Index 3: clip front</li></ul>
-	 * @param radius - The radius of the sphere
-	 * @param sizeScale - The size scaling of the sphere in the direction x, y, z
-	 * @param translate - The translation of the sphere in the direction x, y, z
+	 * @param baseRadius - The radius of the base of the cone
+	 * @param height - The height of the cone
+	 * @param sizeScale - The size scaling of the cone in the direction x, y, z
+	 * @param translate - The translation of the cone in the direction x, y, z
 	 * @param colour4d - The colour of the sphere in 4D. RGBA
-	 * @param extraRotations - Rotations beyond the normal rotation options.
-	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: angle</li><li>float[] index 1: x</li><li>float[] index 2: y</li><li>float[] index 3: z</li></ul></li></ul>
-	 * @param extraClipping - Translation beyond the normal clipping planes. This translates the sphere inwards or outwards of the clipping plane
+	 * @param extraRotations - Rotations beyond the normal rotation options
+	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: angle</li><li>float[] index 1: x</li><li>float[] index 2: y</li><li>float[] index 3: z</li></ul></li>
+	 * @param extraClipping - Translation beyond the normal clipping planes. This translates the cone inwards or outwards of the clipping plane
 	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: x</li><li>float[] index 1: y</li><li>float[] index 2: z</li></ul></li></ul>
 	 */
-	public void drawSphere(float scale, boolean[] clippingOptions, double radius, double[] sizeScale, double[] translate, float[] colour4d, 
-						   ArrayList<float[]> extraRotations, ArrayList<float[]> extraClipping) {
+	public void drawCone(float scale, boolean[] clippingOptions, float baseRadius, float height, double[] sizeScale, double[] translate, float[] colour4d,
+						 ArrayList<float[]> extraRotations, ArrayList<float[]> extraClipping) {
 		//Push
 		gl.glPushMatrix();
-
+		
 		//In specific order:
 		// - Basic translations
 		// - Extra Rotations
@@ -56,7 +55,7 @@ public class Sphere {
 		// - Clipping plane added
 		// - Extra translations beyond the clipping plane for custom cuts
 		// - Draw
-
+		
 		gl.glTranslated(translate[0], translate[1], translate[2]);
 		//Add extra rotations
 		if(extraRotations!=null) {
@@ -83,8 +82,8 @@ public class Sphere {
 			gl.glClipPlane(GL2.GL_CLIP_PLANE3, CLIP_FRONT, 0);
 			gl.glEnable(GL2.GL_CLIP_PLANE3);
 		}
-
-		//Translate into clipping plane to cut a sphere deeper
+		
+		//Translate into clipping plane to cut the cone deeper
 		if(extraClipping!=null) {
 			for(float[] extraClip : extraClipping) {
 				gl.glTranslated(extraClip[0], extraClip[1], extraClip[2]);
@@ -93,7 +92,7 @@ public class Sphere {
 		
 		//Color and draw
 		gl.glColor4fv(colour4d, 0);
-		glut.glutSolidSphere(radius, 100, 100);
+		glut.glutSolidCone(baseRadius, height, 100, 100);
 		
 		//Disable all clipping planes
 		gl.glDisable(GL2.GL_CLIP_PLANE0);
@@ -103,6 +102,6 @@ public class Sphere {
 		
 		//Pop
 		gl.glPopMatrix();
+		
 	}
-	
 }

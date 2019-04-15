@@ -61,7 +61,7 @@ public class Tank {
 		outwardsYWall = new Cube(this.gl, this.glut);
 		inwardsYWall = new Cube(this.gl, this.glut);
 		floor = new Cube(this.gl, this.glut);
-		water = new CreateQuad(this.gl, this.glut);
+		water = new CreateQuad(this.gl);
 	}
 	
 	//draw tank
@@ -104,6 +104,14 @@ public class Tank {
 		
 		//Water
 		this.water.drawQuad((wallWidth/2), wallHeight, (wallLength/2), 0.9f, WATER_COLOR4D, PLANE_THICKNESS);
+	}
+	
+	//Getters
+	public float[] getWallSizes() {
+		return new float[]{this.wallWidth, this.wallHeight, this.wallLength};
+	}
+	public float[] getTankSizes() {
+		return new float[]{this.tankWidth, this.tankHeight, this.tankLength};
 	}
 	
 }

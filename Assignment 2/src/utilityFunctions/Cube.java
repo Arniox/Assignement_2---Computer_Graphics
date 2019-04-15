@@ -10,8 +10,8 @@ public class Cube {
 	
 	//Constructor
 	public Cube(GL2 gl, GLUT glut){
-		this.gl = gl;
-		this.glut = glut;
+		Cube.gl = gl;
+		Cube.glut = glut;
 	}
 	
 	//Draw cube
