@@ -16,6 +16,12 @@ public class Fish {
 	private GLUT glut;
 	private GLU glu;
 	
+	//Fish move
+	public boolean moveForward = false;
+	public boolean moveBackward = false;
+	public boolean moveLeft = false;
+	public boolean moveRight = false;
+	
 	//static values
 	private static final float SCALE = 1;
 	

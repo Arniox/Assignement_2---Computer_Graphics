@@ -39,7 +39,10 @@ public class Main implements GLEventListener, KeyListener{
 	private float[] tankGlobalPos = {0f,(tankHeight/(tankHeight*2)),0f};
 	
 	//Fish parts
-	private float[] fishGlobalPos = {0f,(tankHeight/10)/2,0.1f};
+	float xPosition = 0.5f;
+	float yPosition = (tankHeight/10)/2;
+	float zPosition = -0.1f;
+	private float[] fishGlobalPos = {xPosition,yPosition,zPosition};
 	private float[] fishGlobalRotation = {45f,0,1,0};
 	
 	//track-ball camera
@@ -94,6 +97,11 @@ public class Main implements GLEventListener, KeyListener{
 	public void display(GLAutoDrawable drawable) {
 		time.count();
 		frame++;
+		
+		//Update fish position:
+		fishGlobalPos[0] = xPosition;
+		fishGlobalPos[1] = yPosition;
+		fishGlobalPos[2] = zPosition;
 		
 		// select and clear the model-view matrix
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
@@ -219,11 +227,23 @@ public class Main implements GLEventListener, KeyListener{
 		}
 		if(tank.heightIncreasing) {
 			this.tankHeight += 0.1f;
-			this.fishGlobalPos[1] += 0.005f;
+			yPosition = (tankHeight/10)/2;
 		}
 		if(tank.heightDecreasing) {
 			this.tankHeight -= 0.1f;
-			this.fishGlobalPos[1] -= 0.005f;
+			yPosition = (tankHeight/10)/2;
+		}
+		if(fish.moveForward) {
+			this.xPosition += 0.005f;
+		}
+		if(fish.moveBackward) {
+			this.xPosition -= 0.005f;
+		}
+		if(fish.moveLeft) {
+			this.zPosition -= 0.005f;
+		}
+		if(fish.moveLeft) {
+			this.zPosition += 0.005f;
 		}
 	}
 	
@@ -231,16 +251,16 @@ public class Main implements GLEventListener, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		//Check what is increasing and set to true
-		if(e.getKeyCode() == KeyEvent.VK_W) {
+		if(e.getKeyCode() == KeyEvent.VK_UP) {
 			tank.lengthIncreasing = true;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_S) {
+		if(e.getKeyCode() == KeyEvent.VK_DOWN) {
 			tank.lengthDecreasing = true;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_A) {
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
 			tank.widthIncreasing = true;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_D) {
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			tank.widthDecreasing = true;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_EQUALS) {
@@ -249,21 +269,33 @@ public class Main implements GLEventListener, KeyListener{
 		if(e.getKeyCode() == KeyEvent.VK_MINUS) {
 			tank.heightDecreasing = true;
 		}
+		if(e.getKeyCode() == KeyEvent.VK_W) {
+			fish.moveForward = true;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_S) {
+			fish.moveBackward = true;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_A) {
+			fish.moveLeft = true;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_D) {
+			fish.moveRight = true;
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		//Check what is no longer increasing and set to false
-		if(e.getKeyCode() == KeyEvent.VK_W) {
+		if(e.getKeyCode() == KeyEvent.VK_UP) {
 			tank.lengthIncreasing = false;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_S) {
+		if(e.getKeyCode() == KeyEvent.VK_DOWN) {
 			tank.lengthDecreasing = false;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_A) {
+		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
 			tank.widthIncreasing = false;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_D) {
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			tank.widthDecreasing = false;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_EQUALS) {
@@ -271,6 +303,18 @@ public class Main implements GLEventListener, KeyListener{
 		}
 		if(e.getKeyCode() == KeyEvent.VK_MINUS) {
 			tank.heightDecreasing = false;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_W) {
+			fish.moveForward = false;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_S) {
+			fish.moveBackward = false;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_A) {
+			fish.moveLeft = false;
+		}
+		if(e.getKeyCode() == KeyEvent.VK_D) {
+			fish.moveRight = false;
 		}
 	}
 
