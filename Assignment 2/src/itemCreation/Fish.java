@@ -104,11 +104,19 @@ public class Fish {
 		
 			//Set up main parts
 			this.setMainBodyParts();
-			this.setEyeParts();
+			
+			//Rotations for Right eye
+			gl.glPushMatrix();
+				this.setRightEye();
+			gl.glPopMatrix();
+			
+			//Rotations for Left eye
+			gl.glPushMatrix();
+				this.setLeftEye();
+			gl.glPopMatrix();
 			
 			//Rotations for right fin animations
 			gl.glPushMatrix();
-			gl.glRotated(-0, 0, 0, 1);
 				this.setRightFinParts();
 			gl.glPopMatrix();
 			
@@ -166,32 +174,39 @@ public class Fish {
 	}
 	
 	/**
-	 * Sets up the eye parts. This includes the eye balls and eye lids. Splitting up the drawing of the fish parts allows for easier control
+	 * Sets up the right eye parts. This includes the eye ball and the eye lid. Splitting up the drawing of the fish parts allows for easier control
 	 * @author Nikkolas Diehl
 	 */
-	private void setEyeParts() {
-		//Extra rotations and translation clipping for Eyes
-		//EyeLidRight
-		ArrayList<float[]> extraEyeRightLidRotations = new ArrayList<float[]>();
-		extraEyeRightLidRotations.add(new float[]{90,0,1,0});
-		extraEyeRightLidRotations.add(new float[]{-30,1,0,0});
-		//EyeLidLEft
-		ArrayList<float[]> extraEyeLeftLidRotations = new ArrayList<float[]>();
-		extraEyeLeftLidRotations.add(new float[]{90,0,1,0});
-		extraEyeLeftLidRotations.add(new float[]{30,1,0,0});
+	private void setRightEye() {
+		//Set parts - Right Eye
+		gl.glTranslated(0.045, 0.004, 0.01);
+			eyeBallRight.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
+					 					 new double[]{0,0,0}, FISH_EYE_BALL_COLOUR, null, null);
+		//Translation of eye lid is referenced off of the eye ball
+		gl.glTranslated(0.002, 0.002, 0);
+		gl.glRotated(90,0,1,0);
+		gl.glRotated(-30,1,0,0);
+			eyeLidRight.drawSphere(SCALE, new boolean[]{false, false, true, false}, 0.005f, new double[]{0.8,0.8,0.8},
+					 					 new double[]{0,0,0}, FISH_UNDER_BODY_COLOUR, null, null);
 		
+	}
+	
+	/**
+	 * Sets up the left eye parts. This includes the eye ball and the eye lid. Splitting up the drawing of the fish parts allows for easier control
+	 * @author Nikkolas Diehl
+	 */
+	private void setLeftEye() {
+		//Set parts - Left Eye
+		gl.glTranslated(-0.045,0.004,0.01);
+			eyeBallLeft.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
+					 					 new double[]{0,0,0}, FISH_EYE_BALL_COLOUR, null, null);
+		//Translation of eye lid is referenced off of the eye ball
+		gl.glTranslated(-0.002, 0.002, 0);
+		gl.glRotated(90,0,1,0);
+		gl.glRotated(30,1,0,0);
+			eyeLidLeft.drawSphere(SCALE, new boolean[]{false, false, false, true}, 0.005f, new double[]{0.8,0.8,0.8},
+					 					 new double[]{0,0,0}, FISH_UNDER_BODY_COLOUR, null, null);
 		
-		
-		//Set parts - Eyes
-		//Sphere = Scale, Clipping options, Sphere radius, Size scale, Translation, Colour4d, Extra rotations, Extra translations
-		eyeLidRight.drawSphere(SCALE, new boolean[]{false, false, true, false}, 0.005f, new double[]{0.8,0.8,0.8},
-										 new double[]{0.049,0.004,0.01}, FISH_UNDER_BODY_COLOUR, extraEyeRightLidRotations, null);
-		eyeBallRight.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
-										 new double[]{0.047,0.0027,0.01}, FISH_EYE_BALL_COLOUR, null, null);
-		eyeLidLeft.drawSphere(SCALE, new boolean[]{false, false, false, true}, 0.005f, new double[]{0.8,0.8,0.8},
-										 new double[]{-0.049,0.004,0.01}, FISH_UNDER_BODY_COLOUR, extraEyeLeftLidRotations, null);
-		eyeBallLeft.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
-										 new double[]{-0.047,0.0027,0.01}, FISH_EYE_BALL_COLOUR, null, null);
 	}
 	
 	/**
@@ -204,17 +219,17 @@ public class Fish {
 		gl.glRotated(90,0,1,0);
 		gl.glRotated(10,0,0,1);
 			finRightInner.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.001f, 0.008f, 0.01f, new double[]{1,0.2,1},
-											 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);
+										 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);
 		//Rotations and translations of middle fin is referenced off of the inner fin
 		gl.glTranslated(0, 0, 0.01);
 		gl.glRotated(-10, 0, 1, 0);
-		finRightMiddle.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.0076f, 0.007f, 0.05f, new double[]{1,0.2,1},
-											 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);
+			finRightMiddle.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.0076f, 0.007f, 0.05f, new double[]{1,0.2,1},
+										 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);
 		//Rotations and translations of the end fin is referenced off of the middle fin
 		gl.glTranslated(0, 0, 0.05);
 		gl.glRotated(-12,0,1,0);
-		finRightEnd.drawCone(SCALE, new boolean[]{false, false, false, false}, 0.0073f, 0.025f, new double[]{1,0.2,1},
-											 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);		
+			finRightEnd.drawCone(SCALE, new boolean[]{false, false, false, false}, 0.0073f, 0.025f, new double[]{1,0.2,1},
+										 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);		
 		
 	}
 	
@@ -243,6 +258,10 @@ public class Fish {
 		
 	}
 	
+	/**
+	 * Sets up the tail parts. This includes the top and bottom inner tail part, the end tail part and the two fins. Splitting up the drawing of the fish parts allows for easier control
+	 * @author Nikkolas Diehl
+	 */
 	private void setTailParts() {
 		//Extra rotations and translation clipping for tail parts
 		ArrayList<float[]> extraTopTailClipping = new ArrayList<float[]>();
