@@ -17,6 +17,8 @@ public class Cylinder {
 	//Clipping variables
 	private static final double[] CLIP_TOP = {0,-1.0f,0,0};
 	private static final double[] CLIP_BOTTOM = {0,1.0f,0,0};
+	private static final double[] CLIP_BACK = {0,0,-1.0f,0};
+	private static final double[] CLIP_FRONT = {0,0,1.0f,0};
 	
 	/**
 	 * Creates a Cylinder Object
@@ -83,6 +85,14 @@ public class Cylinder {
 			gl.glClipPlane(GL2.GL_CLIP_PLANE1, CLIP_BOTTOM, 0);
 			gl.glEnable(GL2.GL_CLIP_PLANE1);
 		}
+		if(clippingOptions[2]){
+			gl.glClipPlane(GL2.GL_CLIP_PLANE2, CLIP_BACK, 0);
+			gl.glEnable(GL2.GL_CLIP_PLANE2);
+		}
+		if(clippingOptions[3]) {
+			gl.glClipPlane(GL2.GL_CLIP_PLANE3, CLIP_FRONT, 0);
+			gl.glEnable(GL2.GL_CLIP_PLANE3);
+		}
 
 		//Translate into clipping plane to cut a sphere deeper
 		if(extraClipping!=null) {
@@ -98,6 +108,8 @@ public class Cylinder {
 		//Disable all clipping planes
 		gl.glDisable(GL2.GL_CLIP_PLANE0);
 		gl.glDisable(GL2.GL_CLIP_PLANE1);
+		gl.glDisable(GL2.GL_CLIP_PLANE2);
+		gl.glDisable(GL2.GL_CLIP_PLANE3);
 		
 		//Pop
 		gl.glPopMatrix();

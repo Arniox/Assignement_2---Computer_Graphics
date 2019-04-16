@@ -49,6 +49,12 @@ public class Fish {
 	Cylinder finLeftMiddle;
 	Cone finRightEnd;
 	Cone finLeftEnd;
+	//Objects - Tail parts
+	Cylinder innerTailTop;
+	Cylinder innerTailBottom;
+	Cone outerTail;
+	Cone tailFinRight;
+	Cone tailFinLeft;
 	
 	
 	//constructor
@@ -69,13 +75,19 @@ public class Fish {
 		eyeLidLeft = new Sphere(this.gl, this.glut);
 		eyeBallRight = new Sphere(this.gl, this.glut);
 		eyeBallLeft = new Sphere(this.gl, this.glut);
-		//Set up objects - Front fints
+		//Set up objects - Front fins
 		finRightInner = new Cylinder(this.gl, this.glu);
 		finLeftInner = new Cylinder(this.gl, this.glu);
 		finRightMiddle = new Cylinder(this.gl, this.glu);
 		finLeftMiddle = new Cylinder(this.gl, this.glu);
 		finRightEnd = new Cone(this.gl, this.glut);
 		finLeftEnd = new Cone(this.gl, this.glut);
+		//Set up objects - Tail parts
+		innerTailTop = new Cylinder(this.gl, this.glu);
+		innerTailBottom = new Cylinder(this.gl, this.glu);
+		outerTail = new Cone(this.gl, this.glut);
+		tailFinRight = new Cone(this.gl, this.glut);
+		tailFinLeft = new Cone(this.gl, this.glut);
 	}
 	
 	//draw fish
@@ -104,6 +116,13 @@ public class Fish {
 			gl.glPushMatrix();
 			gl.glRotated(0, 0, 0, 1);
 				this.setLeftFinParts();		
+			gl.glPopMatrix();
+			
+			//Set tail parts
+			//Rotations for fin
+			gl.glPushMatrix();
+			float[] tailRotation = {12,1,0,0};
+				this.setTailParts(tailRotation);
 			gl.glPopMatrix();
 
 		//Pop
@@ -134,24 +153,18 @@ public class Fish {
 		//Set parts - Body, mouth, teeth
 		//Cylinder = Scale, Clipping options, Base radius, Top radius, Height of cylinder, Size scale, Translation, Color4d, Extra rotations, Extra translations
 		//Sphere = Scale, Clipping options, Sphere radius, Size scale, Translation, Colour4d, Extra rotations, Extra translations
-		fishUnderBodyMiddle.drawCylinder(SCALE, new boolean[]{true, false}, 0.05f, 0.043f, 0.2f, new double[]{1,1,1},
-							  			 new double[]{0,0,0},
-							  			 FISH_UNDER_BODY_COLOUR, null, null);
+		fishUnderBodyMiddle.drawCylinder(SCALE, new boolean[]{true, false, false, false}, 0.05f, 0.043f, 0.2f, new double[]{1,1,1},
+							  			 new double[]{0,0,0}, FISH_UNDER_BODY_COLOUR, null, null);
 		fishUnderBodyMouth.drawSphere(SCALE, new boolean[]{true, false, true, false}, 0.05f, new double[]{1,1,3.5},
-									  	 new double[]{0,0,0}, 
-									  	 FISH_UNDER_BODY_COLOUR, extraBottomMouthRotations, null);
-		fishTeethTop.drawCylinder(SCALE, new boolean[]{true, false}, 0.04f, 0.037f, 0.04f, new double[]{1,3.8,1},
-										 new double[]{0,0.008,-0.002},
-										 FISH_TEETH_COLOUR, extraTopTeethRotations, null);
-		fishTeethBottom.drawCylinder(SCALE, new boolean[]{true, false}, 0.038f, 0.039f, 0.022f, new double[]{1,3.8,1},
-										 new double[]{0,-0.008,-0.002},
-										 FISH_TEETH_COLOUR, extraBottomTeethRotations, null);
-		fishTopBodyMiddle.drawCylinder(SCALE, new boolean[]{false, true}, 0.0584f, 0.0525f, 0.2f, new double[]{1,1,1},
-										 new double[]{0,0,0},
-										 FISH_TOP_BODY_COLOUR, null, extraTopMouthClipping);
+									  	 new double[]{0,0,0}, FISH_UNDER_BODY_COLOUR, extraBottomMouthRotations, null);
+		fishTeethTop.drawCylinder(SCALE, new boolean[]{true, false, false, false}, 0.04f, 0.037f, 0.04f, new double[]{1,3.8,1},
+										 new double[]{0,0.008,-0.002}, FISH_TEETH_COLOUR, extraTopTeethRotations, null);
+		fishTeethBottom.drawCylinder(SCALE, new boolean[]{true, false, false, false}, 0.038f, 0.039f, 0.022f, new double[]{1,3.8,1},
+										 new double[]{0,-0.008,-0.002}, FISH_TEETH_COLOUR, extraBottomTeethRotations, null);
+		fishTopBodyMiddle.drawCylinder(SCALE, new boolean[]{false, true, false, false}, 0.0584f, 0.0525f, 0.2f, new double[]{1,1,1},
+										 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, extraTopMouthClipping);
 		fishTopBodyMouth.drawSphere(SCALE, new boolean[]{false, true, true, false}, 0.0584f, new double[]{1,1,3.25},
-										 new double[]{0,0,0},
-										 FISH_TOP_BODY_COLOUR, extraTopMouthRotation, extraTopMouthClipping);
+										 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, extraTopMouthRotation, extraTopMouthClipping);
 	}
 	
 	/**
@@ -174,17 +187,13 @@ public class Fish {
 		//Set parts - Eyes
 		//Sphere = Scale, Clipping options, Sphere radius, Size scale, Translation, Colour4d, Extra rotations, Extra translations
 		eyeLidRight.drawSphere(SCALE, new boolean[]{false, false, true, false}, 0.005f, new double[]{0.8,0.8,0.8},
-										 new double[]{0.049,0.004,0.01},
-										 FISH_UNDER_BODY_COLOUR, extraEyeRightLidRotations, null);
+										 new double[]{0.049,0.004,0.01}, FISH_UNDER_BODY_COLOUR, extraEyeRightLidRotations, null);
 		eyeBallRight.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
-										 new double[]{0.047,0.0027,0.01},
-										 FISH_EYE_BALL_COLOUR, null, null);
+										 new double[]{0.047,0.0027,0.01}, FISH_EYE_BALL_COLOUR, null, null);
 		eyeLidLeft.drawSphere(SCALE, new boolean[]{false, false, false, true}, 0.005f, new double[]{0.8,0.8,0.8},
-										 new double[]{-0.049,0.004,0.01},
-										 FISH_UNDER_BODY_COLOUR, extraEyeLeftLidRotations, null);
+										 new double[]{-0.049,0.004,0.01}, FISH_UNDER_BODY_COLOUR, extraEyeLeftLidRotations, null);
 		eyeBallLeft.drawSphere(SCALE, new boolean[]{false, false, false, false}, 0.004f, new double[]{0.8,0.8,0.8},
-										 new double[]{-0.047,0.0027,0.01},
-										 FISH_EYE_BALL_COLOUR, null, null);
+										 new double[]{-0.047,0.0027,0.01}, FISH_EYE_BALL_COLOUR, null, null);
 	}
 	
 	/**
@@ -206,11 +215,11 @@ public class Fish {
 		//Set parts - Front fins
 		//Cylinder = Scale, Clipping options, Base radius, Top radius, Height of cylinder, Size scale, Translation, Color4d, Extra rotations, Extra translations
 		//Cone = Scale, Clipping options, Base radius, Height, Size scale, Translation, Colour4d, Extra rotations, Extra clipping
-		finRightInner.drawCylinder(SCALE, new boolean[]{false, false}, 0.001f, 0.008f, 0.01f, new double[]{1,0.2,1},
+		finRightInner.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.001f, 0.008f, 0.01f, new double[]{1,0.2,1},
 										 finRightInnerTranslations, FISH_TOP_BODY_COLOUR, extraRightFinRotations, null);
 		//Rotations and translations of middle fin is referenced off of the inner fin
 		extraRightFinRotations.add(new float[]{-10,0,1,0});
-		finRightMiddle.drawCylinder(SCALE, new boolean[]{false, false}, 0.0076f, 0.007f, 0.05f, new double[]{1,0.2,1},
+		finRightMiddle.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.0076f, 0.007f, 0.05f, new double[]{1,0.2,1},
 										 finRightMiddleTranslations, FISH_TOP_BODY_COLOUR, extraRightFinRotations, null);
 		//Rotations and translations of the end fin is referenced off of the middle fin
 		extraRightFinRotations.add(new float[]{-12,0,1,0});
@@ -239,16 +248,42 @@ public class Fish {
 		//Set parts - Front fins
 		//Cylinder = Scale, Clipping options, Base radius, Top radius, Height of cylinder, Size scale, Translation, Color4d, Extra rotations, Extra translations
 		//Cone = Scale, Clipping options, Base radius, Height, Size scale, Translation, Colour4d, Extra rotations, Extra clipping
-		finLeftInner.drawCylinder(SCALE, new boolean[]{false, false}, 0.001f, 0.008f, 0.01f, new double[]{1,0.2,1},
+		finLeftInner.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.001f, 0.008f, 0.01f, new double[]{1,0.2,1},
 				 						 finLeftInnerTranslations, FISH_TOP_BODY_COLOUR, extraLeftFinRotations, null);
 		//Rotations and translations of middle fin is referenced off of the inner fin
 		extraLeftFinRotations.add(new float[]{10,0,1,0});
-		finLeftMiddle.drawCylinder(SCALE, new boolean[]{false, false}, 0.0076f, 0.007f, 0.05f, new double[]{1,0.2,1},
+		finLeftMiddle.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.0076f, 0.007f, 0.05f, new double[]{1,0.2,1},
 										 finLeftMiddleTranslations, FISH_TOP_BODY_COLOUR, extraLeftFinRotations, null);
 		//Rotations and translations of the end fin is referenced off of the middle fin
 		extraLeftFinRotations.add(new float[]{12,0,1,0});
 		finLeftEnd.drawCone(SCALE, new boolean[]{false, false, false, false}, 0.0073f, 0.025f, new double[]{1,0.2,1},
 										 finLeftEndTranslations, FISH_TOP_BODY_COLOUR, extraLeftFinRotations, null);	
+		
+	}
+	
+	private void setTailParts(float[] mainRotation) {
+		//Extra rotations and translation clipping for tail parts
+		ArrayList<float[]> extraTopTailClipping = new ArrayList<float[]>();
+		extraTopTailClipping.add(new float[]{0,-0.03f,0});
+		ArrayList<float[]> extraTailRotations = new ArrayList<float[]>();
+		extraTailRotations.add(mainRotation);
+		ArrayList<float[]> extraTailEndRotations = new ArrayList<float[]>();
+		extraTailEndRotations.add(new float[]{mainRotation[0],mainRotation[1],mainRotation[2],mainRotation[3]});
+		
+		//Animation referencing
+		double[] tailCylinderShift = {0,0,0.18};
+		double[] tailEndShift = {tailCylinderShift[0],tailCylinderShift[1]-0.048f,tailCylinderShift[2]+0.19f};
+		float tailBaseThickness = 0.036f;
+		
+		//Set parts - Tail parts
+		//Cylinder = Scale, Clipping options, Base radius, Top radius, Height of cylinder, Size scale, Translation, Color4d, Extra rotations, Extra translations
+		//Cone = Scale, Clipping options, Base radius, Height, Size scale, Translation, Colour4d, Extra rotations, Extra clipping
+		innerTailTop.drawCylinder(SCALE, new boolean[]{false, true, false, false}, 0.0525f, tailBaseThickness, 0.2f, new double[]{1,1,1},
+										 tailCylinderShift, FISH_TOP_BODY_COLOUR, extraTailRotations, extraTopTailClipping);
+		innerTailBottom.drawCylinder(SCALE, new boolean[]{true, false, false, false}, 0.043f, tailBaseThickness*0.55f, 0.2f, new double[]{1,1,1},
+										 tailCylinderShift, FISH_UNDER_BODY_COLOUR, extraTailRotations, null);
+		outerTail.drawCone(SCALE, new boolean[]{false, false, false, false}, tailBaseThickness*0.475f, 0.05f, new double[]{1,0.88,1},
+										 tailEndShift, FISH_TOP_BODY_COLOUR, extraTailEndRotations, null);
 		
 	}
 	
