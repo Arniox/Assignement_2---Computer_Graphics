@@ -52,7 +52,7 @@ public class Fish {
 	//Objects - Tail parts
 	Cylinder innerTailTop;
 	Cylinder innerTailBottom;
-	Cone outerTail;
+	Cylinder outerTail;
 	Cone tailFinRight;
 	Cone tailFinLeft;
 	
@@ -85,7 +85,7 @@ public class Fish {
 		//Set up objects - Tail parts
 		innerTailTop = new Cylinder(this.gl, this.glu);
 		innerTailBottom = new Cylinder(this.gl, this.glu);
-		outerTail = new Cone(this.gl, this.glut);
+		outerTail = new Cylinder(this.gl, this.glu);
 		tailFinRight = new Cone(this.gl, this.glut);
 		tailFinLeft = new Cone(this.gl, this.glut);
 	}
@@ -114,15 +114,13 @@ public class Fish {
 			
 			//Rotations for left fin animations
 			gl.glPushMatrix();
-			gl.glRotated(0, 0, 0, 1);
 				this.setLeftFinParts();		
 			gl.glPopMatrix();
 			
 			//Set tail parts
 			//Rotations for fin
 			gl.glPushMatrix();
-			float[] tailRotation = {12,1,0,0};
-				this.setTailParts(tailRotation);
+				this.setTailParts();
 			gl.glPopMatrix();
 
 		//Pop
@@ -200,31 +198,23 @@ public class Fish {
 	 * Sets up the right front fin parts. This includes the right and left inner fins, right and left middle fin parts and the right and left outer fin parts.<br>Splitting up the drawing of the fish parts allows for easier control
 	 * @author Nikkolas Diehl
 	 */
-	private void setRightFinParts() {
-		//Extra rotations and translation clipping for front fins
-		ArrayList<float[]> extraRightFinRotations = new ArrayList<float[]>();
-		extraRightFinRotations.add(new float[]{90,0,1,0});
-		extraRightFinRotations.add(new float[]{10,0,0,1});
-		
-		//Animation referencing
-		double[] finRightInnerTranslations = {0.045,0,0.06};
-		//Middle fin is referenced off of inner fin
-		double[] finRightMiddleTranslations = {finRightInnerTranslations[0]+0.0085,finRightInnerTranslations[1],finRightInnerTranslations[2]-0.0005};
-		double[] finRightEndTranslations = {finRightMiddleTranslations[0]+0.0478,finRightMiddleTranslations[1]-0.0018,finRightMiddleTranslations[2]+0.0081};
-		
+	private void setRightFinParts() {		
 		//Set parts - Front fins
-		//Cylinder = Scale, Clipping options, Base radius, Top radius, Height of cylinder, Size scale, Translation, Color4d, Extra rotations, Extra translations
-		//Cone = Scale, Clipping options, Base radius, Height, Size scale, Translation, Colour4d, Extra rotations, Extra clipping
-		finRightInner.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.001f, 0.008f, 0.01f, new double[]{1,0.2,1},
-										 finRightInnerTranslations, FISH_TOP_BODY_COLOUR, extraRightFinRotations, null);
+		gl.glTranslated(0.045, 0, 0.06);
+		gl.glRotated(90,0,1,0);
+		gl.glRotated(10,0,0,1);
+			finRightInner.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.001f, 0.008f, 0.01f, new double[]{1,0.2,1},
+											 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);
 		//Rotations and translations of middle fin is referenced off of the inner fin
-		extraRightFinRotations.add(new float[]{-10,0,1,0});
+		gl.glTranslated(0, 0, 0.01);
+		gl.glRotated(-10, 0, 1, 0);
 		finRightMiddle.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.0076f, 0.007f, 0.05f, new double[]{1,0.2,1},
-										 finRightMiddleTranslations, FISH_TOP_BODY_COLOUR, extraRightFinRotations, null);
+											 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);
 		//Rotations and translations of the end fin is referenced off of the middle fin
-		extraRightFinRotations.add(new float[]{-12,0,1,0});
+		gl.glTranslated(0, 0, 0.05);
+		gl.glRotated(-12,0,1,0);
 		finRightEnd.drawCone(SCALE, new boolean[]{false, false, false, false}, 0.0073f, 0.025f, new double[]{1,0.2,1},
-										 finRightEndTranslations, FISH_TOP_BODY_COLOUR, extraRightFinRotations, null);
+											 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);		
 		
 	}
 	
@@ -233,57 +223,47 @@ public class Fish {
 	 * @author Nikkolas Diehl
 	 */
 	private void setLeftFinParts() {
-		//Extra rotations and translation clipping for front fins
-		ArrayList<float[]> extraLeftFinRotations = new ArrayList<float[]>();
-		extraLeftFinRotations.add(new float[]{-90,0,1,0});
-		extraLeftFinRotations.add(new float[]{-10,0,0,1});
-
-		//Animation referencing
-		double[] finLeftInnerTranslations = {-0.045,0,0.06};
-		//Middle fin is referenced off of inner fin
-		double[] finLeftMiddleTranslations = {finLeftInnerTranslations[0]-0.0085,finLeftInnerTranslations[1],finLeftInnerTranslations[2]-0.0005};
-		//End fin is referenced off of middle fin
-		double[] finLeftEndTranslations = {finLeftMiddleTranslations[0]-0.0478,finLeftMiddleTranslations[1]-0.0018,finLeftMiddleTranslations[2]+0.0081};
 		
 		//Set parts - Front fins
-		//Cylinder = Scale, Clipping options, Base radius, Top radius, Height of cylinder, Size scale, Translation, Color4d, Extra rotations, Extra translations
-		//Cone = Scale, Clipping options, Base radius, Height, Size scale, Translation, Colour4d, Extra rotations, Extra clipping
-		finLeftInner.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.001f, 0.008f, 0.01f, new double[]{1,0.2,1},
-				 						 finLeftInnerTranslations, FISH_TOP_BODY_COLOUR, extraLeftFinRotations, null);
+		gl.glTranslated(-0.045, 0, 0.06);
+		gl.glRotated(-90, 0, 1, 0);
+		gl.glRotated(-10,0,0,1);
+			finLeftInner.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.001f, 0.008f, 0.01f, new double[]{1,0.2,1},
+										 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);
 		//Rotations and translations of middle fin is referenced off of the inner fin
-		extraLeftFinRotations.add(new float[]{10,0,1,0});
-		finLeftMiddle.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.0076f, 0.007f, 0.05f, new double[]{1,0.2,1},
-										 finLeftMiddleTranslations, FISH_TOP_BODY_COLOUR, extraLeftFinRotations, null);
+		gl.glTranslated(0, 0, 0.01);
+		gl.glRotated(10,0,1,0);
+			finLeftMiddle.drawCylinder(SCALE, new boolean[]{false, false, false, false}, 0.0076f, 0.007f, 0.05f, new double[]{1,0.2,1},
+										 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);
 		//Rotations and translations of the end fin is referenced off of the middle fin
-		extraLeftFinRotations.add(new float[]{12,0,1,0});
-		finLeftEnd.drawCone(SCALE, new boolean[]{false, false, false, false}, 0.0073f, 0.025f, new double[]{1,0.2,1},
-										 finLeftEndTranslations, FISH_TOP_BODY_COLOUR, extraLeftFinRotations, null);	
+		gl.glTranslated(0, 0, 0.05);
+		gl.glRotated(12,0,1,0);
+			finLeftEnd.drawCone(SCALE, new boolean[]{false, false, false, false}, 0.0073f, 0.025f, new double[]{1,0.2,1},
+										 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);		
 		
 	}
 	
-	private void setTailParts(float[] mainRotation) {
+	private void setTailParts() {
 		//Extra rotations and translation clipping for tail parts
 		ArrayList<float[]> extraTopTailClipping = new ArrayList<float[]>();
 		extraTopTailClipping.add(new float[]{0,-0.03f,0});
-		ArrayList<float[]> extraTailRotations = new ArrayList<float[]>();
-		extraTailRotations.add(mainRotation);
-		ArrayList<float[]> extraTailEndRotations = new ArrayList<float[]>();
-		extraTailEndRotations.add(new float[]{mainRotation[0],mainRotation[1],mainRotation[2],mainRotation[3]});
-		
-		//Animation referencing
-		double[] tailCylinderShift = {0,0,0.18};
-		double[] tailEndShift = {tailCylinderShift[0],tailCylinderShift[1]-0.048f,tailCylinderShift[2]+0.19f};
+
 		float tailBaseThickness = 0.036f;
 		
 		//Set parts - Tail parts
-		//Cylinder = Scale, Clipping options, Base radius, Top radius, Height of cylinder, Size scale, Translation, Color4d, Extra rotations, Extra translations
-		//Cone = Scale, Clipping options, Base radius, Height, Size scale, Translation, Colour4d, Extra rotations, Extra clipping
+		//Rotate and then translate
+		gl.glTranslated(0, 0, 0.18);
+		gl.glRotated(15, 1, 0, 0);
 		innerTailTop.drawCylinder(SCALE, new boolean[]{false, true, false, false}, 0.0525f, tailBaseThickness, 0.2f, new double[]{1,1,1},
-										 tailCylinderShift, FISH_TOP_BODY_COLOUR, extraTailRotations, extraTopTailClipping);
+										 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, extraTopTailClipping);
 		innerTailBottom.drawCylinder(SCALE, new boolean[]{true, false, false, false}, 0.043f, tailBaseThickness*0.55f, 0.2f, new double[]{1,1,1},
-										 tailCylinderShift, FISH_UNDER_BODY_COLOUR, extraTailRotations, null);
-		outerTail.drawCone(SCALE, new boolean[]{false, false, false, false}, tailBaseThickness*0.475f, 0.05f, new double[]{1,0.88,1},
-										 tailEndShift, FISH_TOP_BODY_COLOUR, extraTailEndRotations, null);
+										 new double[]{0,0,0}, FISH_UNDER_BODY_COLOUR, null, null);
+		
+		//Rotations and translations of the end tail part is referenced off of the inner tail parts
+		gl.glTranslated(0, -0.005, 0.20);
+		gl.glRotated(15, 1, 0, 0);
+		outerTail.drawCylinder(SCALE, new boolean[]{false, false, false, false}, tailBaseThickness*0.50f, 0.0f, 0.03f, new double[]{1,0.7,1},
+										 new double[]{0,0,0}, FISH_TOP_BODY_COLOUR, null, null);
 		
 	}
 	
