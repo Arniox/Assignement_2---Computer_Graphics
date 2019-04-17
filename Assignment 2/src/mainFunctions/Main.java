@@ -40,9 +40,9 @@ public class Main implements GLEventListener, KeyListener{
 	private float[] tankGlobalPos = {0f,(tankHeight/(tankHeight*2)),0f};
 	
 	//Fish parts
-	float xPosition = 0.5f;
+	float xPosition = 0f;
 	float yPosition = (tankHeight/10)/2;
-	float zPosition = -0.1f;
+	float zPosition = 0f;
 	private float[] fishGlobalPos = {xPosition,yPosition,zPosition};
 	private float[] fishGlobalRotation = {45f,0,1,0};
 	
@@ -97,7 +97,6 @@ public class Main implements GLEventListener, KeyListener{
 	@Override
 	public void display(GLAutoDrawable drawable) {
 		time.count();
-		frame++;
 		
 		//Update fish position:
 		fishGlobalPos[0] = xPosition;
@@ -118,7 +117,7 @@ public class Main implements GLEventListener, KeyListener{
 			//Camera
 			camera.draw(gl, true);
 			//Axis
-			coordinateAxis.drawAxes(this.fishController.getGlobalFishPos(), fishGlobalRotation);
+			coordinateAxis.drawAxes(fishController.getGlobalFishPos(), fishController.getGlobalFishRot(), fishController.getFishPosIndex());
 			//Draw all other non transparent objects
 			fishController.renderFishController(tankWidth, tankHeight, tankLength);
 			//Draw transparent objects last
@@ -128,8 +127,14 @@ public class Main implements GLEventListener, KeyListener{
 				tank.drawTank(tankWidth, tankHeight, tankLength, tankGlobalPos);
 			gl.glDepthMask(true);
 			gl.glDisable(GL2.GL_BLEND);
+			
+			//Animate
+			fishController.animateFish(time.delta, frame);
 
 		gl.glFlush();
+
+		//Iterate frame count
+		frame++;
 	}
 
 	@Override

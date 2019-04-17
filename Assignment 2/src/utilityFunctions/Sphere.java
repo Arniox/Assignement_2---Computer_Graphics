@@ -18,10 +18,11 @@ public class Sphere {
 	
 	/**
 	 * Creates a Sphere Object
-	 * @author Nikkolas Diehl
 	 * 
-	 * @param gl - GL2 input
-	 * @param glut - GLUT input
+	 * @param gl - GL2 variable for the Sphere
+	 * @param glut - GLUT variable for the Sphere
+	 * 
+	 * @author Nikkolas Diehl
 	 */
 	public Sphere(GL2 gl, GLUT glut){
 		Sphere.gl = gl;
@@ -30,7 +31,6 @@ public class Sphere {
 	
 	/**
 	 * Draw a sphere with given inputs
-	 * @author Nikkolas Diehl
 	 * 
 	 * @param scale - The scale of the entire object. It is advised to keep this at scale 1
 	 * @param clippingOptions - Options for clipping the sphere.
@@ -43,6 +43,8 @@ public class Sphere {
 	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: angle</li><li>float[] index 1: x</li><li>float[] index 2: y</li><li>float[] index 3: z</li></ul></li></ul>
 	 * @param extraClipping - Translation beyond the normal clipping planes. This translates the sphere inwards or outwards of the clipping plane
 	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: x</li><li>float[] index 1: y</li><li>float[] index 2: z</li></ul></li></ul>
+	 * 
+	 * @author Nikkolas Diehl
 	 */
 	public void drawSphere(float scale, boolean[] clippingOptions, double radius, double[] sizeScale, double[] translate, float[] colour4d, 
 						   ArrayList<float[]> extraRotations, ArrayList<float[]> extraClipping) {

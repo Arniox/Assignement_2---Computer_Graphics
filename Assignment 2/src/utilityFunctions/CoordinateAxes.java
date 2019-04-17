@@ -1,5 +1,6 @@
 package utilityFunctions;
 
+import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.util.gl2.GLUT;
 
@@ -9,13 +10,29 @@ public class CoordinateAxes {
 	private GLUT glut;
 	
 	//Constructor
+	/**
+	 * Constructs the coordinate axis
+	 * 
+	 * @param gl - GL2 variable for the coordinate axis
+	 * @param glut - GLUT variable for the coordinate axis
+	 * 
+	 * @author Nikkolas Diehl
+	 */
 	public CoordinateAxes(GL2 gl, GLUT glut) {
 		this.gl = gl;
 		this.glut = glut;
 	}
 	
 	//Draw the axes lines and sphere
-	public void drawAxes(float[] fishPosition, float[] fishRotation) {
+	/**
+	 * Draws the axis and debugging lines
+	 * 
+	 * @param fishPosition - Global fish position
+	 * @param fishRotation - Global fish rotation
+	 * 
+	 * @author Nikkolas Diehl
+	 */
+	public void drawAxes(float[] fishPosition, float[] fishRotation, int indexOfFish) {
 		gl.glDisable(GL2.GL_LIGHTING);
 		
 		//Draw axis lines
@@ -59,7 +76,9 @@ public class CoordinateAxes {
 				gl.glVertex3f(fishPosition[0],0,fishPosition[2]);
 			//Draw connecting line
 				gl.glVertex3d(0,0,0);
-				gl.glVertex3f(fishPosition[0], fishPosition[1], fishPosition[2]);			
+				gl.glVertex3f(fishPosition[0], fishPosition[1], fishPosition[2]);	
+				
+
 		gl.glEnd();
 		
 		//Draw sphere
@@ -113,6 +132,10 @@ public class CoordinateAxes {
 		//Draw Z text
 			gl.glRasterPos3f(fishPosition[0],0.002f,fishPosition[2]/2);
 			glut.glutBitmapString(GLUT.BITMAP_HELVETICA_10, fishPosition[2]+"");
+			gl.glEnd();
+		//Draw Angle text
+			gl.glRasterPos3f(fishPosition[0],fishPosition[1]+0.06f,fishPosition[2]);
+			glut.glutBitmapString(GLUT.BITMAP_HELVETICA_10, fishRotation[0]+" ° at index "+indexOfFish);
 			gl.glEnd();
 			
 		//Draw text of distance from 0,0,0 to fish

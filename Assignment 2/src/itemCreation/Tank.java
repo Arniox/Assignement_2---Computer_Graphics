@@ -51,6 +51,16 @@ public class Tank {
 	CreateQuad water;
 	
 	//constructor
+	/**
+	 * Constructs the tank and all the parts that make up the tank
+	 * @see utilityFunctions.Cube#Cube(GL2, GLUT) - Cube generation
+	 * @see utilityFunctions.CreateQuad#CreateQuad(GL2) - 2D flat Quad generation
+	 * 
+	 * @param gl - GL2 variable for the tank
+	 * @param glut - GLUT variable for the tank
+	 * 
+	 * @author Nikkolas Diehl
+	 */
 	public Tank(GL2 gl, GLUT glut) {
 		this.gl = gl;
 		this.glut = glut;
@@ -65,6 +75,18 @@ public class Tank {
 	}
 	
 	//draw tank
+	/**
+	 * Draws the entire tank and all of its parts
+	 * @see utilityFunctions.Cube#drawCube(float, double, double, double, float[], double[], double[]) - Cube generation
+	 * @see utilityFunctions.CreateQuad#drawQuad(float, float, float, float, float[], float) - Quad generation
+	 * 
+	 * @param W - Tank Width
+	 * @param H - Tank Height
+	 * @param L - Tank Length
+	 * @param globalPos - Global Position of the entire tank
+	 * 
+	 * @author Nikkolas Diehl
+	 */
 	public void drawTank(float W, float H, float L, float[] globalPos) {
 		//Set position
 		this.globalPosition = globalPos;
@@ -107,9 +129,21 @@ public class Tank {
 	}
 	
 	//Getters
+	/**
+	 * Gets the wall sizes
+	 * @return a new float containing wallWidth, wallHeight, wallLength
+	 * 
+	 * @author Nikkolas Diehl
+	 */
 	public float[] getWallSizes() {
 		return new float[]{this.wallWidth, this.wallHeight, this.wallLength};
 	}
+	/**
+	 * Gets the tank sizes
+	 * @return a new float containing the tankWidth, tankHeight, tankLength
+	 * 
+	 * @author Nikkolas Diehl
+	 */
 	public float[] getTankSizes() {
 		return new float[]{this.tankWidth, this.tankHeight, this.tankLength};
 	}

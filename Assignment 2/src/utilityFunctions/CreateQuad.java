@@ -7,11 +7,19 @@ public class CreateQuad {
 	private static GL2 gl;
 	
 	//Constructor
+	/**
+	 * Constructs the cube
+	 * 
+	 * @param gl - GL2 variable for the 2D Quad
+	 * 
+	 * @author Nikkolas Diehl
+	 */
 	public CreateQuad(GL2 gl) {
 		CreateQuad.gl = gl;
 	}
 	
 	/**
+	 * Draws a 2D Quad with the given inputs
 	 * 
 	 * @param waterWidth - width the water should be
 	 * @param heightOfWater - height the water should be
@@ -19,6 +27,8 @@ public class CreateQuad {
 	 * @param depthIntoTank - the depth, from the top of the tank, of relatively how deep the water should be
 	 * @param waterColor4D - the colour of the water
 	 * @param glassThickNess - the thickness of the glass for proper placement
+	 * 
+	 * @author Nikkolas Diehl
 	 */
 	public void drawQuad(float waterWidth, float heightOfWater, float waterLength, float depthIntoTank, float[] waterColor4D, float glassThickNess) {
 		gl.glBegin(GL2.GL_QUADS);

@@ -18,10 +18,11 @@ public class Cone {
 	
 	/**
 	 * Creates a cone object
-	 * @author Nikkolas Diehl
 	 * 
-	 * @param gl - GL2 input
-	 * @param glut - GLUT input
+	 * @param gl - GL2 variable for the Cone
+	 * @param glut - GLUT variable for the Cone
+	 * 
+	 * @author Nikkolas Diehl
 	 */
 	public Cone(GL2 gl, GLUT glut) {
 		Cone.gl = gl;
@@ -29,6 +30,7 @@ public class Cone {
 	}
 	
 	/**
+	 * Draws a cone with the given inputs
 	 * 
 	 * @param scale - The scale of the entire object. It is advised to keep this at scale 1
 	 * @param clippingOptions - Options for clipping the sphere
@@ -42,6 +44,8 @@ public class Cone {
 	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: angle</li><li>float[] index 1: x</li><li>float[] index 2: y</li><li>float[] index 3: z</li></ul></li>
 	 * @param extraClipping - Translation beyond the normal clipping planes. This translates the cone inwards or outwards of the clipping plane
 	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: x</li><li>float[] index 1: y</li><li>float[] index 2: z</li></ul></li></ul>
+	 * 
+	 * @author Nikkolas Diehl
 	 */
 	public void drawCone(float scale, boolean[] clippingOptions, float baseRadius, float height, double[] sizeScale, double[] translate, float[] colour4d,
 						 ArrayList<float[]> extraRotations, ArrayList<float[]> extraClipping) {

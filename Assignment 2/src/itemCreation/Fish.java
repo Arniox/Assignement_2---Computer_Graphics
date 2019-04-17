@@ -69,6 +69,17 @@ public class Fish {
 	
 	
 	//constructor
+	/**
+	 * Constructs the fish and all the parts
+	 * @see utilityFunctions.Cylinder#Cylinder(GL2, GLU) - Cylinder generation
+	 * @see utilityFunctions.Sphere#Sphere(GL2, GLUT) - Sphere generation
+	 * @see utilityFunctions.Cone#Cone(GL2, GLUT) - Cone generation
+	 * 
+	 * @param gl - GL2 variable for the fish
+	 * @param glut - GLUT variable for the vish
+	 * 
+	 * @author Nikkolas Diehl
+	 */
 	public Fish(GL2 gl, GLUT glut) {
 		this.gl = gl;
 		this.glut = glut;
@@ -102,6 +113,15 @@ public class Fish {
 	}
 	
 	//draw fish
+	/**
+	 * Draws the entire fish
+	 * @see #setUpEntireFish() - Setting up and drawing the entire fish
+	 *  
+	 * @param globalPos - The global position of the fish
+	 * @param globalRotation - The global rotation of the fish
+	 * 
+	 * @author Nikkolas Diehl
+	 */
 	public void drawFish(float[] globalPos, float[] globalRotation) {
 		//Set part positions
 		this.fishPosition = globalPos;
@@ -112,7 +132,6 @@ public class Fish {
 	
 	/**
 	 * Sets up and draws all parts of the fish.
-	 * @author Nikkolas Diehl
 	 * 
 	 * @see #setMainBodyParts() - Setting up main body
 	 * @see #setTeeth() - Setting up the teeth
@@ -121,6 +140,8 @@ public class Fish {
 	 * @see #setRightFinParts() - Setting up the right fin
 	 * @see #setLeftFinParts() - Setting up the left fin
 	 * @see #setTailParts() - Setting up the tail
+	 * 
+	 * @author Nikkolas Diehl
 	 */
 	private void setUpEntireFish() {
 		//Set up main parts
@@ -162,6 +183,7 @@ public class Fish {
 	//Animation
 	/**
 	 * Animates only the parts. This doesn't require time. Just animates based on frame rate
+	 * 
 	 * @author Nikkolas Diehl
 	 */
 	public void animateParts() {
@@ -180,6 +202,9 @@ public class Fish {
 	
 	/**
 	 * Sets up the main body parts. This includes body and mouth parts. Splitting up the drawing of the fish parts allows for easier control
+	 * @see utilityFunctions.Cylinder#drawCylinder(float, boolean[], float, float, float, double[], double[], float[], ArrayList, ArrayList) - Cylinder generation
+	 * @see utilityFunctions.Sphere#drawSphere(float, boolean[], double, double[], double[], float[], ArrayList, ArrayList) - Sphere generation
+	 * 
 	 * @author Nikkolas Diehl
 	 */
 	private void setMainBodyParts() {
@@ -204,7 +229,9 @@ public class Fish {
 	}
 	
 	/**
-	 * Sets up the teeth parts. This includes the top and bottom teeth parts. Splitting up the drawing of the fish parts allows for easier control'
+	 * Sets up the teeth parts. This includes the top and bottom teeth parts. Splitting up the drawing of the fish parts allows for easier control
+	 * @see utilityFunctions.Cylinder#drawCylinder(float, boolean[], float, float, float, double[], double[], float[], ArrayList, ArrayList) - Cylinder generation
+	 * 
 	 * @author Nikkolas Diehl
 	 */
 	private void setTeeth() {
@@ -223,6 +250,8 @@ public class Fish {
 	
 	/**
 	 * Sets up the right eye parts. This includes the eye ball and the eye lid. Splitting up the drawing of the fish parts allows for easier control
+	 * @see utilityFunctions.Sphere#drawSphere(float, boolean[], double, double[], double[], float[], ArrayList, ArrayList) - Sphere generation
+	 * 
 	 * @author Nikkolas Diehl
 	 */
 	private void setRightEye() {
@@ -241,6 +270,8 @@ public class Fish {
 	
 	/**
 	 * Sets up the left eye parts. This includes the eye ball and the eye lid. Splitting up the drawing of the fish parts allows for easier control
+	 * @see utilityFunctions.Sphere#drawSphere(float, boolean[], double, double[], double[], float[], ArrayList, ArrayList) - Sphere generation
+	 * 
 	 * @author Nikkolas Diehl
 	 */
 	private void setLeftEye() {
@@ -259,6 +290,9 @@ public class Fish {
 	
 	/**
 	 * Sets up the right front fin parts. This includes the right and left inner fins, right and left middle fin parts and the right and left outer fin parts.<br>Splitting up the drawing of the fish parts allows for easier control
+	 * @see utilityFunctions.Cylinder#drawCylinder(float, boolean[], float, float, float, double[], double[], float[], ArrayList, ArrayList) - Cylinder generation
+	 * @see utilityFunctions.Cone#drawCone(float, boolean[], float, float, double[], double[], float[], ArrayList, ArrayList) - Cone generation
+	 * 
 	 * @author Nikkolas Diehl
 	 */
 	private void setRightFinParts() {		
@@ -286,6 +320,9 @@ public class Fish {
 	
 	/**
 	 * Sets up the right front fin parts. This includes the right and left inner fins, right and left middle fin parts and the right and left outer fin parts.<br>Splitting up the drawing of the fish parts allows for easier control
+	 * @see utilityFunctions.Cylinder#drawCylinder(float, boolean[], float, float, float, double[], double[], float[], ArrayList, ArrayList) - Cylinder generation
+	 * @see utilityFunctions.Cone#drawCone(float, boolean[], float, float, double[], double[], float[], ArrayList, ArrayList) - Cone generation
+	 * 
 	 * @author Nikkolas Diehl
 	 */
 	private void setLeftFinParts() {		
@@ -313,6 +350,9 @@ public class Fish {
 	
 	/**
 	 * Sets up the tail parts. This includes the top and bottom inner tail part, the end tail part and the two fins. Splitting up the drawing of the fish parts allows for easier control
+	 * @see utilityFunctions.Cylinder#drawCylinder(float, boolean[], float, float, float, double[], double[], float[], ArrayList, ArrayList) - Cylinder generation
+	 * @see utilityFunctions.Cone#drawCone(float, boolean[], float, float, double[], double[], float[], ArrayList, ArrayList) - Cone generation
+	 * 
 	 * @author Nikkolas Diehl
 	 */
 	private void setTailParts() {

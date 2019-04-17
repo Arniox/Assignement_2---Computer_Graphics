@@ -22,10 +22,11 @@ public class Cylinder {
 	
 	/**
 	 * Creates a Cylinder Object
-	 * @author Nikkolas Diehl
 	 * 
-	 * @param gl - GL2 input
-	 * @param glu - GLUT input
+	 * @param gl - GL2 variable for the Cylinder
+	 * @param glu - GLUT variable for the Cylinder
+	 * 
+	 * @author Nikkolas Diehl
 	 */
 	public Cylinder(GL2 gl, GLU glu) {
 		Cylinder.gl = gl;
@@ -36,7 +37,6 @@ public class Cylinder {
 	
 	/**
 	 * Draws a cylinder with the given values
-	 * @author Nikkolas Diehl
 	 * 
 	 * @param scale - The scale of the entire cylinder. It is advised to keep this at 1
 	 * @param clippingOptions - Clipping options for the object
@@ -52,6 +52,7 @@ public class Cylinder {
 	 * @param extraClipping - Translation beyond the normal clipping planes. This translates the sphere inwards or outwards of the clipping plane
 	 * <ul><li>ArrayList<float[]> input<ul><li>float[] index 0: x</li><li>float[] index 1: y</li><li>float[] index 2: z</li></ul></li></ul>
 	 * 
+	 * @author Nikkolas Diehl
 	 */
 	public void drawCylinder(float scale, boolean[] clippingOptions, float baseRadius, float topRadius, float heightOfCylinder, 
 							 double[] sizeScale, double[] translate, float[] colour4d,
