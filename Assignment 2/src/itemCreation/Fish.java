@@ -29,9 +29,8 @@ public class Fish {
 	private float[] fishPosition = new float[3];
 	private float[] fishRotation = new float[4];
 	
-	//Animation variables
+	//Animation part variables
 	private float degrees = 0;
-	private int upDown = 1;
 	public float FIN_ROTATION = 0f;
 	public float TAIL_ROTATION = 0f;
 	
@@ -107,19 +106,8 @@ public class Fish {
 		//Set part positions
 		this.fishPosition = globalPos;
 		this.fishRotation = globalRotation;
-		
-		//Push
-		gl.glPushMatrix();
-		//GLOBAL TRANSLATION AND ROTATIONS
-		gl.glTranslated(fishPosition[0], fishPosition[1], fishPosition[2]);
-		gl.glRotated(fishRotation[0], fishRotation[1], fishRotation[2], fishRotation[3]);
-		
-			this.setUpEntireFish();
-			this.animateParts();
-
-		//Pop
-		gl.glPopMatrix();
-			
+		//Set up the fish
+		this.setUpEntireFish();			
 	}
 	
 	/**
@@ -178,27 +166,14 @@ public class Fish {
 	 */
 	public void animateParts() {
 		//Check if parts going up or down
-		if(degrees>=15) {
-			upDown=2;
-		}else if(degrees<=-15) {
-			upDown=1;
-		}
+		if(degrees>=360) degrees = 0;
 		
 		//Animate fins and tail
-		FIN_ROTATION = degrees;
-		TAIL_ROTATION = degrees*-1;
-		
-		//Counting up or down
-		switch(upDown) {
-		//up
-		case 1:
-			degrees+=0.5f;
-			break;
-		//down
-		case 2:
-			degrees-=0.5f;
-			break;
-		}
+		FIN_ROTATION = 15f*(float)Math.sin(Math.toRadians(degrees));
+		TAIL_ROTATION = 15f*(float)Math.sin(Math.toRadians(degrees))*-1;
+
+		//Iterate degrees
+		degrees++;
 	}
 	
 	//Fish setup

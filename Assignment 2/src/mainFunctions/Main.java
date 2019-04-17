@@ -15,6 +15,7 @@ import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.gl2.GLUT;
 
 import itemCreation.Fish;
+import itemCreation.FishController;
 import itemCreation.Tank;
 import utilityFunctions.CoordinateAxes;
 import utilityFunctions.Timing;
@@ -31,7 +32,7 @@ public class Main implements GLEventListener, KeyListener{
 	
 	//Objects - Tank
 	private Tank tank;
-	private Fish fish;
+	private FishController fishController;
 	//tank scaling
 	private float tankWidth = 15f;
 	private float tankHeight = 8f;
@@ -117,9 +118,9 @@ public class Main implements GLEventListener, KeyListener{
 			//Camera
 			camera.draw(gl, true);
 			//Axis
-			coordinateAxis.drawAxes(fishGlobalPos, fishGlobalRotation);
+			coordinateAxis.drawAxes(this.fishController.getGlobalFishPos(), fishGlobalRotation);
 			//Draw all other non transparent objects
-			fish.drawFish(fishGlobalPos, fishGlobalRotation);
+			fishController.renderFishController(tankWidth, tankHeight, tankLength);
 			//Draw transparent objects last
 			gl.glEnable(GL2.GL_BLEND);
 			gl.glDepthMask(false);
@@ -162,7 +163,7 @@ public class Main implements GLEventListener, KeyListener{
 		
 		//set up objects
 		tank = new Tank(gl, glut);
-		fish = new Fish(gl, glut);
+		fishController = new FishController(gl, glut, fishGlobalPos, fishGlobalRotation);
 		
 		//use the lights
 		this.lights(gl);
@@ -227,23 +228,9 @@ public class Main implements GLEventListener, KeyListener{
 		}
 		if(tank.heightIncreasing) {
 			this.tankHeight += 0.1f;
-			yPosition = (tankHeight/10)/2;
 		}
 		if(tank.heightDecreasing) {
 			this.tankHeight -= 0.1f;
-			yPosition = (tankHeight/10)/2;
-		}
-		if(fish.moveForward) {
-			this.xPosition += 0.005f;
-		}
-		if(fish.moveBackward) {
-			this.xPosition -= 0.005f;
-		}
-		if(fish.moveLeft) {
-			this.zPosition -= 0.005f;
-		}
-		if(fish.moveLeft) {
-			this.zPosition += 0.005f;
 		}
 	}
 	
@@ -269,18 +256,6 @@ public class Main implements GLEventListener, KeyListener{
 		if(e.getKeyCode() == KeyEvent.VK_MINUS) {
 			tank.heightDecreasing = true;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_W) {
-			fish.moveForward = true;
-		}
-		if(e.getKeyCode() == KeyEvent.VK_S) {
-			fish.moveBackward = true;
-		}
-		if(e.getKeyCode() == KeyEvent.VK_A) {
-			fish.moveLeft = true;
-		}
-		if(e.getKeyCode() == KeyEvent.VK_D) {
-			fish.moveRight = true;
-		}
 	}
 
 	@Override
@@ -303,18 +278,6 @@ public class Main implements GLEventListener, KeyListener{
 		}
 		if(e.getKeyCode() == KeyEvent.VK_MINUS) {
 			tank.heightDecreasing = false;
-		}
-		if(e.getKeyCode() == KeyEvent.VK_W) {
-			fish.moveForward = false;
-		}
-		if(e.getKeyCode() == KeyEvent.VK_S) {
-			fish.moveBackward = false;
-		}
-		if(e.getKeyCode() == KeyEvent.VK_A) {
-			fish.moveLeft = false;
-		}
-		if(e.getKeyCode() == KeyEvent.VK_D) {
-			fish.moveRight = false;
 		}
 	}
 
