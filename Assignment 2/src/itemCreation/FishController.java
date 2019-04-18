@@ -15,7 +15,8 @@ public class FishController {
 	
 	//Animation
 	private int index = 0;
-	private float interp = 0;
+	private float animationSpeed = 0.09f;
+	private int totalRot = 0;
 	
 	//Animator
 	private FishAnimationPath animationPath;
@@ -83,7 +84,7 @@ public class FishController {
 	}
 	
 	//Animation
-	public void animateFish(double time, int frame) {
+	public void animateFish(float time, int frame) {
 		//If first frame, then set fish to default location
 		if(frame==0) {
 			globalFishPosition = animationPath.getCircle_Animation().get(index);
@@ -92,31 +93,22 @@ public class FishController {
 		if(animationPath.isValuesClose(globalFishPosition, animationPath.getCircle_Animation().get(index))) {
 			if(index>=animationPath.getCircle_Animation().size()-1) {
 				index=0;
+				globalFishRotation = animationPath.getCircle_Rotation().get(index);
+				totalRot++;
 			}else {
 				index++;
 			}
-			interp = 0.0f;
 		}else {
-			interp += 0.0008f;
-			if(interp >= 1.0f) interp = 0.0f;
 			//Get the position in the ring
-			globalFishPosition = new float[]{((1-interp) * globalFishPosition[0] + interp * animationPath.getCircle_Animation().get(index)[0]),
-											 ((1-interp) * globalFishPosition[1] + interp * animationPath.getCircle_Animation().get(index)[1]),
-											 ((1-interp) * globalFishPosition[2] + interp * animationPath.getCircle_Animation().get(index)[2])};
+			globalFishPosition = new float[]{((1-time*animationSpeed) * globalFishPosition[0] + time*animationSpeed * animationPath.getCircle_Animation().get(index)[0]),
+											 ((1-time*animationSpeed) * globalFishPosition[1] + time*animationSpeed * animationPath.getCircle_Animation().get(index)[1]),
+											 ((1-time*animationSpeed) * globalFishPosition[2] + time*animationSpeed * animationPath.getCircle_Animation().get(index)[2])};
 
 			//Get the rortation in the ring
-			if(animationPath.getCircle_Rotation().get(index)[0]<=-175) {
-				globalFishRotation = new float[]{(animationPath.getCircle_Rotation().get(index)[0]*-1),
-					 							 (animationPath.getCircle_Rotation().get(index)[1]),
-					 							 (animationPath.getCircle_Rotation().get(index)[2]),
-					 							 (animationPath.getCircle_Rotation().get(index)[3])};
-			}else{
-				globalFishRotation = new float[]{((1-interp) * globalFishRotation[0] + interp * animationPath.getCircle_Rotation().get(index)[0]),
-												 (animationPath.getCircle_Rotation().get(index)[1]),
-												 (animationPath.getCircle_Rotation().get(index)[2]),
-												 (animationPath.getCircle_Rotation().get(index)[3])};
-			}
-			
+			globalFishRotation = new float[]{((1-time*animationSpeed) * globalFishRotation[0] + time*animationSpeed * animationPath.getCircle_Rotation().get(index)[0]),
+											 (animationPath.getCircle_Rotation().get(index)[1]),
+											 (animationPath.getCircle_Rotation().get(index)[2]),
+											 (animationPath.getCircle_Rotation().get(index)[3])};			
 		}
 	}
 	
@@ -147,5 +139,8 @@ public class FishController {
 	 */
 	public int getFishPosIndex() {
 		return this.index;
+	}
+	public int getTotalRevolutions() {
+		return this.totalRot;
 	}
 }

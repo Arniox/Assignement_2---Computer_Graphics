@@ -32,7 +32,7 @@ public class CoordinateAxes {
 	 * 
 	 * @author Nikkolas Diehl
 	 */
-	public void drawAxes(float[] fishPosition, float[] fishRotation, int indexOfFish) {
+	public void drawAxes(float[] fishPosition, float[] fishRotation, int indexOfFish, int totalRevolutions) {
 		gl.glDisable(GL2.GL_LIGHTING);
 		
 		//Draw axis lines
@@ -135,8 +135,11 @@ public class CoordinateAxes {
 			gl.glEnd();
 		//Draw Angle text
 			gl.glRasterPos3f(fishPosition[0],fishPosition[1]+0.06f,fishPosition[2]);
-			glut.glutBitmapString(GLUT.BITMAP_HELVETICA_10, fishRotation[0]+" ° at index "+indexOfFish);
+			glut.glutBitmapString(GLUT.BITMAP_HELVETICA_10, "Index: "+indexOfFish+". Rotation: "+fishRotation[0]+" °");
 			gl.glEnd();
+		//Draw total revolutions around ring
+			gl.glRasterPos3f(fishPosition[0],fishPosition[1]+0.07f,fishPosition[2]);
+			glut.glutBitmapString(GLUT.BITMAP_HELVETICA_10, "Total revolutions: "+totalRevolutions);
 			
 		//Draw text of distance from 0,0,0 to fish
 		float distanceBetween = (float)Math.sqrt((Math.pow((fishPosition[0]-0f), 2f))+(Math.pow((fishPosition[1]-0f), 2f))+(Math.pow((fishPosition[2]-0f), 2f)));

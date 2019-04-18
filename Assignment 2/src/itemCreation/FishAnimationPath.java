@@ -82,7 +82,7 @@ public class FishAnimationPath {
 		
 		//Make the animation ring and iterate by 15 degrees each time
 		double radians;
-		for(int deg=0;deg<360;deg+=15) {
+		for(int deg=0;deg<360;deg++) {
 			radians = Math.toRadians(deg);
 			
 			//Set X and Z. Y is just the fish height
@@ -97,7 +97,9 @@ public class FishAnimationPath {
 				gl.glVertex3f(x, y, z);
 			gl.glEnd();
 			
+			//Set location
 			circleAnimationLocationVertices.add(new float[]{x, y, z});
+			//Set angle;
 			circleRotationLocationVertices.add(new float[]{180-deg,0,1,0});
 			
 		}
@@ -116,9 +118,9 @@ public class FishAnimationPath {
 	 * @author Nikkolas Diehl
 	 */
 	public boolean isValuesClose(float[] position, float[] location) {
-		if(((position[0]<=location[0]+0.001f)&&(position[0]>=location[0]-0.001f))&&
-		   ((position[1]<=location[1]+0.001f)&&(position[1]>=location[1]-0.001f))&&
-		   ((position[2]<=location[2]+0.001f)&&(position[2]>=location[2]-0.001f))) {
+		if(((position[0]<=location[0]+0.2f)&&(position[0]>=location[0]-0.2f))&&
+		   ((position[1]<=location[1]+0.2f)&&(position[1]>=location[1]-0.2f))&&
+		   ((position[2]<=location[2]+0.2f)&&(position[2]>=location[2]-0.2f))) {
 			return true;
 		}else {
 			return false;

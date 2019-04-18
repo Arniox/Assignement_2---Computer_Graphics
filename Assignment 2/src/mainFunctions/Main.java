@@ -117,7 +117,10 @@ public class Main implements GLEventListener, KeyListener{
 			//Camera
 			camera.draw(gl, true);
 			//Axis
-			coordinateAxis.drawAxes(fishController.getGlobalFishPos(), fishController.getGlobalFishRot(), fishController.getFishPosIndex());
+			coordinateAxis.drawAxes(fishController.getGlobalFishPos(),
+									fishController.getGlobalFishRot(),
+									fishController.getFishPosIndex(),
+									fishController.getTotalRevolutions());
 			//Draw all other non transparent objects
 			fishController.renderFishController(tankWidth, tankHeight, tankLength);
 			//Draw transparent objects last
@@ -129,7 +132,7 @@ public class Main implements GLEventListener, KeyListener{
 			gl.glDisable(GL2.GL_BLEND);
 			
 			//Animate
-			fishController.animateFish(time.delta, frame);
+			fishController.animateFish((float)time.delta, frame);
 
 		gl.glFlush();
 
