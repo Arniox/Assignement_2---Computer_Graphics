@@ -30,6 +30,9 @@ public class Main implements GLEventListener, KeyListener{
 	public Timing time;
 	public int frame;
 	
+	//Debugging
+	private static final boolean DEBUG = true;
+	
 	//Objects - Tank
 	private Tank tank;
 	private FishController fishController;
@@ -117,12 +120,18 @@ public class Main implements GLEventListener, KeyListener{
 			//Camera
 			camera.draw(gl, true);
 			//Axis
-			coordinateAxis.drawAxes(fishController.getGlobalFishPos(),
-									fishController.getGlobalFishRot(),
-									fishController.getFishPosIndex(),
-									fishController.getTotalRevolutions());
+			if(DEBUG) {
+				coordinateAxis.debug(frame, 
+						fishController.getCurrentJumpFrame(),
+						fishController.getGlobalFishPos(),
+						fishController.getGlobalFishRot(),
+						fishController.getFishPosIndex(),
+						fishController.getTotalRevolutions(),
+						fishController.getTotalJumps(),
+						fishController.getWaterController().getAverageHeight());
+			}
 			//Draw all other non transparent objects
-			fishController.renderFishController(tankWidth, tankHeight, tankLength);
+			fishController.renderFishController(DEBUG, tankWidth, tankHeight, tankLength, tank.getWater().getWaterHeight());
 			//Draw transparent objects last
 			gl.glEnable(GL2.GL_BLEND);
 			gl.glDepthMask(false);
@@ -132,7 +141,7 @@ public class Main implements GLEventListener, KeyListener{
 			gl.glDisable(GL2.GL_BLEND);
 			
 			//Animate
-			fishController.animateFish((float)time.delta, frame);
+			fishController.animateFish((float)time.delta, frame, tankWidth, tankHeight, tankLength);
 
 		gl.glFlush();
 
@@ -171,7 +180,7 @@ public class Main implements GLEventListener, KeyListener{
 		
 		//set up objects
 		tank = new Tank(gl, glut);
-		fishController = new FishController(gl, glut, fishGlobalPos, fishGlobalRotation);
+		fishController = new FishController(gl, glut, fishGlobalPos, (tankHeight/10)/2, fishGlobalRotation);
 		
 		//use the lights
 		this.lights(gl);

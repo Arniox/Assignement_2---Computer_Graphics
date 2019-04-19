@@ -147,5 +147,14 @@ public class Tank {
 	public float[] getTankSizes() {
 		return new float[]{this.tankWidth, this.tankHeight, this.tankLength};
 	}
+	/**
+	 * Return the water object for the tank
+	 * @return water
+	 * 
+	 * @author Nikkolas Diehl
+	 */
+	public CreateQuad getWater() {
+		return this.water;
+	}
 	
 }

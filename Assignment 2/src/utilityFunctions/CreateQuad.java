@@ -6,6 +6,9 @@ public class CreateQuad {
 	//Main Variables
 	private static GL2 gl;
 	
+	//Water height
+	private float waterHeight = 0;
+	
 	//Constructor
 	/**
 	 * Constructs the cube
@@ -33,11 +36,24 @@ public class CreateQuad {
 	public void drawQuad(float waterWidth, float heightOfWater, float waterLength, float depthIntoTank, float[] waterColor4D, float glassThickNess) {
 		gl.glBegin(GL2.GL_QUADS);
 		gl.glColor4fv(waterColor4D, 0);
+
+		waterHeight = (heightOfWater-glassThickNess)*depthIntoTank;
 		
-		gl.glVertex3f((-1)*waterWidth+glassThickNess, (heightOfWater-glassThickNess)*depthIntoTank, (-1)*waterLength+glassThickNess);
-		gl.glVertex3f((-1)*waterWidth+glassThickNess, (heightOfWater-glassThickNess)*depthIntoTank, (1)*waterLength-glassThickNess);
-		gl.glVertex3f((1)*waterWidth-glassThickNess, (heightOfWater-glassThickNess)*depthIntoTank, (1)*waterLength-glassThickNess);
-		gl.glVertex3f((1)*waterWidth-glassThickNess, (heightOfWater-glassThickNess)*depthIntoTank, (-1)*waterLength+glassThickNess);
+		gl.glVertex3f((-1)*waterWidth+glassThickNess, waterHeight, (-1)*waterLength+glassThickNess);
+		gl.glVertex3f((-1)*waterWidth+glassThickNess, waterHeight, (1)*waterLength-glassThickNess);
+		gl.glVertex3f((1)*waterWidth-glassThickNess, waterHeight, (1)*waterLength-glassThickNess);
+		gl.glVertex3f((1)*waterWidth-glassThickNess, waterHeight, (-1)*waterLength+glassThickNess);
 		gl.glEnd();
 	}
+	
+	/**
+	 * Return the height of the water/quad 
+	 * @return waterHeight
+	 * 
+	 * @author Nikkolas Diehl
+	 */
+	public float getWaterHeight() {
+		return this.waterHeight;
+	}
+	
 }
