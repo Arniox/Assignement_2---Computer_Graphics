@@ -74,7 +74,7 @@ public class FishController {
 		jumpFrame = (int)(Math.random()*1000);
 		
 		//Animation randoms
-		dyFish = (float)(Math.random()*0.6f+0.3f);
+		dyFish = (float)(Math.random()*0.6f+0.4f);
 		dxFish = (float)(Math.random()*0.2f)-0.1f;
 		dzFish = (float)(Math.random()*0.2f)-0.1f;
 		
