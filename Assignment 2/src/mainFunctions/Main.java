@@ -25,14 +25,14 @@ public class Main implements GLEventListener, KeyListener{
 	private static GLCanvas canvas;
 	private static GL2 gl;
 	private static GLUT glut;
-	
+
 	//Set up public variables
 	public Timing time;
 	public int frame;
-	
+
 	//Debugging
 	private static final boolean DEBUG = true;
-	
+
 	//Objects - Tank
 	private Tank tank;
 	private FishController fishController;
@@ -41,44 +41,44 @@ public class Main implements GLEventListener, KeyListener{
 	private float tankHeight = 8f;
 	private float tankLength = 15f;
 	private float[] tankGlobalPos = {0f,(tankHeight/(tankHeight*2)),0f};
-	
+
 	//Fish parts
 	float xPosition = 0f;
 	float yPosition = (tankHeight/10)/2;
 	float zPosition = 0f;
 	private float[] fishGlobalPos = {xPosition,yPosition,zPosition};
 	private float[] fishGlobalRotation = {45f,0,1,0};
-	
+
 	//track-ball camera
 	private TrackballCamera camera;
 	//Axis
 	private CoordinateAxes coordinateAxis;
-	
+
 	//Main
 	public static void main(String[] args) {
 		//Build GUIView which contains everything
 		Frame frame = new Frame("Fish Tank");
-		
+
 		//Set up GL info
 		GLProfile profile = GLProfile.get(GLProfile.GL2);
 		GLCapabilities capabilities = new GLCapabilities(profile);
 		canvas = new GLCanvas(capabilities);
-		
+
 		//Canvas stuff
 		Main fishTank = new Main();
 		canvas.addGLEventListener(fishTank);
 		canvas.addKeyListener(fishTank);
 		frame.add(canvas);
-		
+
 		frame.setSize(800, 800);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setAlwaysOnTop(false);
 		frame.setResizable(true);
-		
+
 		//Animator set up
 		final Animator animator = new Animator(canvas);
-		
+
 		//Window listener
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -90,7 +90,7 @@ public class Main implements GLEventListener, KeyListener{
 				}).start();
 			}
 		});
-		
+
 		//Last setup
 		animator.start();
 		canvas.requestFocusInWindow();
@@ -100,12 +100,12 @@ public class Main implements GLEventListener, KeyListener{
 	@Override
 	public void display(GLAutoDrawable drawable) {
 		time.count();
-		
+
 		//Update fish position:
 		fishGlobalPos[0] = xPosition;
 		fishGlobalPos[1] = yPosition;
 		fishGlobalPos[2] = zPosition;
-		
+
 		// select and clear the model-view matrix
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 		gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
@@ -115,13 +115,13 @@ public class Main implements GLEventListener, KeyListener{
 
 		//Modular resizing
 		this.useKeyPresses();
-		
+
 		//drawing
 			//Camera
 			camera.draw(gl, true);
 			//Axis
 			if(DEBUG) {
-				coordinateAxis.debug(frame, 
+				coordinateAxis.debug(frame,
 						fishController.getCurrentJumpFrame(),
 						fishController.getGlobalFishPos(),
 						fishController.getGlobalFishRot(),
@@ -139,7 +139,7 @@ public class Main implements GLEventListener, KeyListener{
 				tank.drawTank(tankWidth, tankHeight, tankLength, tankGlobalPos);
 			gl.glDepthMask(true);
 			gl.glDisable(GL2.GL_BLEND);
-			
+
 			//Animate
 			fishController.animateFish((float)time.delta, frame, tankWidth, tankHeight, tankLength);
 
@@ -152,7 +152,7 @@ public class Main implements GLEventListener, KeyListener{
 	@Override
 	public void dispose(GLAutoDrawable arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -165,26 +165,26 @@ public class Main implements GLEventListener, KeyListener{
 		//Set up the drawing area and shading mode
 		gl.glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 		gl.glShadeModel(GL2.GL_SMOOTH);
-		
+
 		//Set up the camera
 		camera = new TrackballCamera(canvas);
 		camera.setDistance(1.5);
 		camera.setFieldOfView(60);
 		camera.setLookAt(0, 0 ,0);
-		
+
 		//Create Axis
 		coordinateAxis = new CoordinateAxes(gl, glut);
-		
+
 	    //Initiating Code
 		time = new Timing();
-		
+
 		//set up objects
 		tank = new Tank(gl, glut);
 		fishController = new FishController(gl, glut, fishGlobalPos, (tankHeight/10)/2, fishGlobalRotation);
-		
+
 		//use the lights
 		this.lights(gl);
-		
+
 		//Console output
 		System.out.println("Commands:");
 		System.out.println("W: to increase length, S: to decrease length");
@@ -196,32 +196,32 @@ public class Main implements GLEventListener, KeyListener{
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
 		camera.newWindowSize(width, height);
 	}
-	
+
 	private void lights(GL2 gl) {
 		// lighting stuff
 		float ambient[] = { 0, 0, 0, 1 };
 		float diffuse[] = {1f, 1f, 1f, 1 };
 		float specular[] = { 1, 1, 1, 1 };
-		
-		float[] ambientLight = { 0.1f, 0.1f, 0.1f,0f };  // weak RED ambient 
-		gl.glLightfv(GL2.GL_LIGHT3, GL2.GL_AMBIENT, ambientLight, 0); 
-		
+
+		float[] ambientLight = { 0.1f, 0.1f, 0.1f,0f };  // weak RED ambient
+		gl.glLightfv(GL2.GL_LIGHT3, GL2.GL_AMBIENT, ambientLight, 0);
+
 		float position0[] = { 5, 5, 5, 0 };
 		gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_POSITION, position0, 0);
 		gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_AMBIENT, ambient, 0);
 		gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, diffuse, 0);
 		gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_SPECULAR, specular, 0);
-		
+
 		float position1[] = { -10, -10, -10, 0 };
 		gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_POSITION, position1, 0);
 		gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_AMBIENT, ambient, 0);
 		gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, diffuse, 0);
 		gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_SPECULAR, specular, 0);
-		
+
 		gl.glEnable(GL2.GL_LIGHTING);
 		gl.glEnable(GL2.GL_LIGHT0);
 		gl.glEnable(GL2.GL_LIGHT1);
-	
+
 		//lets use use standard color functions
 		gl.glEnable(GL2.GL_COLOR_MATERIAL);
 		//normalise the surface normals for lighting calculations
@@ -250,7 +250,7 @@ public class Main implements GLEventListener, KeyListener{
 			this.tankHeight -= 0.1f;
 		}
 	}
-	
+
 	//key events
 	@Override
 	public void keyPressed(KeyEvent e) {
