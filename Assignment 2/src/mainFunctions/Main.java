@@ -109,6 +109,7 @@ public class Main implements GLEventListener, KeyListener{
 		// select and clear the model-view matrix
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 		gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
+		gl.glEnable(GL2.GL_BLEND);
 		gl.glEnable(GL2.GL_DEPTH_TEST);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
@@ -133,16 +134,15 @@ public class Main implements GLEventListener, KeyListener{
 			//Draw all other non transparent objects
 			fishController.renderFishController(DEBUG, tankWidth, tankHeight, tankLength, tank.getWater().getWaterHeight());
 			//Draw transparent objects last
-			gl.glEnable(GL2.GL_BLEND);
 			gl.glDepthMask(false);
 				//Draw transparent objects with no depth testing and blending for true transparancy
 				tank.drawTank(tankWidth, tankHeight, tankLength, tankGlobalPos);
 			gl.glDepthMask(true);
-			gl.glDisable(GL2.GL_BLEND);
-
+			
 			//Animate
 			fishController.animateFish((float)time.delta, frame, tankWidth, tankHeight, tankLength);
 
+		gl.glDisable(GL2.GL_BLEND);
 		gl.glFlush();
 
 		//Iterate frame count
