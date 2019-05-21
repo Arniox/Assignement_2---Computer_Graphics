@@ -203,21 +203,6 @@ public class FishController {
 	}
 	
 	/**
-	 * Circles around the circleIndex from one side to the other once a jump is completed
-	 * 
-	 * @author Nikkolas Diehl
-	 */
-	private void circleIndexToOtherSide() {
-		for(int i=0;i<180;i++) {
-			if(index==359) {
-				index=0;
-			}
-			
-			index++;
-		}
-	}
-	
-	/**
 	 * Interpolate from fish position to animation point
 	 * 
 	 * @param time - timeDelta

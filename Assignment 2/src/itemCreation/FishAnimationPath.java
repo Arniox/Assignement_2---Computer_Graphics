@@ -9,7 +9,6 @@ import com.jogamp.opengl.util.gl2.GLUT;
 public class FishAnimationPath {
 	//Main variables
 	private GL2 gl;
-	private GLUT glut;	
 
 	//Animation Variables
 	private ArrayList<float[]> circleAnimationLocationVertices = new ArrayList<float[]>();
@@ -17,6 +16,7 @@ public class FishAnimationPath {
 	private ArrayList<float[]> circleRotationLocationVertices = new ArrayList<float[]>();
 	
 	//Sizing variables
+	@SuppressWarnings("unused")
 	private boolean change = false;
 	private double width = 0;
 	private double height = 0;
@@ -33,7 +33,6 @@ public class FishAnimationPath {
 	 */
 	public FishAnimationPath(GL2 gl, GLUT glut) {
 		this.gl = gl;
-		this.glut = glut;
 	}
 	
 	/**

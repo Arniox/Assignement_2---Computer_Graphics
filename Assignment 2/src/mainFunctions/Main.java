@@ -14,7 +14,6 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.gl2.GLUT;
 
-import itemCreation.Fish;
 import itemCreation.FishController;
 import itemCreation.Tank;
 import utilityFunctions.CoordinateAxes;
